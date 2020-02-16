@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { LayoutAnimation, RefreshControl } from 'react-native'
 
 import List from '../components/List'
-import Fire from '../firebase/Fire'
+import { getPaged } from '../firebase/Fire'
 
 const PAGE_SIZE = 5
 
@@ -40,7 +40,7 @@ export default class FeedScreen extends Component {
     this.setState({ loading: true })
 
     // The data prop will be an array of posts, the cursor will be used for pagination.
-    const { data, cursor } = await Fire.shared.getPaged({
+    const { data, cursor } = await getPaged({
       size: PAGE_SIZE,
       start: lastKey
     })
