@@ -1,12 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, TouchableHighlight } from 'react-native'
 
 export default class Footer extends React.Component {
   onPress = () => {
-    this.props.onPress && this.props.onPress();
-  };
-  render() {
-    const { onPress, style, ...props } = this.props;
+    this.props.onPress && this.props.onPress()
+  }
+
+  render () {
+    const { onPress, style, ...props } = this.props
     return (
       <TouchableHighlight
         underlayColor={'#eeeeee'}
@@ -16,7 +17,7 @@ export default class Footer extends React.Component {
       >
         <Text style={styles.text}>Load More...</Text>
       </TouchableHighlight>
-    );
+    )
   }
 }
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.3)',
+    borderTopColor: 'rgba(0,0,0,0.3)'
   },
-  text: { fontWeight: 'bold', fontSize: 16 },
-});
+  text: { fontWeight: 'bold', fontSize: 16 }
+})

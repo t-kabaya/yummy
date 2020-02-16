@@ -5,9 +5,8 @@ import { LayoutAnimation, RefreshControl } from 'react-native'
 import List from '../components/List'
 import Fire from '../firebase/Fire'
 
-// Set the default number of images to load for each pagination.
 const PAGE_SIZE = 5
-console.disableYellowBox = true
+
 export default class FeedScreen extends Component {
   state = {
     loading: false,
@@ -62,11 +61,9 @@ export default class FeedScreen extends Component {
   // This will make the data base pull the most recent items.
   _onRefresh = () => this.makeRemoteRequest()
 
-  // If we press the "Load More..." footer then get the next page of posts
   onPressFooter = () => this.makeRemoteRequest(this.lastKnownKey)
 
   render () {
-    // Let's make everything purrty by calling this method which animates layout changes.
     LayoutAnimation.easeInEaseOut()
     return (
       <List

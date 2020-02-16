@@ -1,14 +1,15 @@
 // Import React Navigation
 import {
   createBottomTabNavigator,
-  createStackNavigator,
-} from 'react-navigation';
+  createStackNavigator
+} from 'react-navigation'
 
-import tabBarIcon from './utils/tabBarIcon';
+import tabBarIcon from './utils/tabBarIcon'
 // Import the screens
-import FeedScreen from './screens/FeedScreen';
-import NewPostScreen from './screens/NewPostScreen';
-import SelectPhotoScreen from './screens/SelectPhotoScreen';
+import FeedScreen from './screens/FeedScreen'
+import NewPostScreen from './screens/NewPostScreen'
+import SelectPhotoScreen from './screens/SelectPhotoScreen'
+console.disableYellowBox = true
 
 // Create our main tab navigator for moving between the Feed and Photo screens
 const navigator = createBottomTabNavigator(
@@ -19,26 +20,26 @@ const navigator = createBottomTabNavigator(
       screen: FeedScreen,
       navigationOptions: {
         // Add a cool Material Icon for this screen
-        tabBarIcon: tabBarIcon('home'),
-      },
+        tabBarIcon: tabBarIcon('home')
+      }
     },
     // All the same stuff but for the Photo screen
     Photo: {
       screen: SelectPhotoScreen,
       navigationOptions: {
-        tabBarIcon: tabBarIcon('add-circle'),
-      },
-    },
+        tabBarIcon: tabBarIcon('add-circle')
+      }
+    }
   },
   {
     // We want to hide the labels and set a nice 2-tone tint system for our tabs
     tabBarOptions: {
       showLabel: false,
       activeTintColor: 'black',
-      inactiveTintColor: 'gray',
-    },
-  },
-);
+      inactiveTintColor: 'gray'
+    }
+  }
+)
 
 // Create the navigator that pushes high-level screens like the `NewPost` screen.
 const stackNavigator = createStackNavigator(
@@ -46,15 +47,15 @@ const stackNavigator = createStackNavigator(
     Main: {
       screen: navigator,
       // Set the title for our app when the tab bar screen is present
-      navigationOptions: { title: 'Instaham 🐷' },
+      navigationOptions: { title: 'ヤミー' }
     },
     // This screen will not have a tab bar
-    NewPost: NewPostScreen,
+    NewPost: NewPostScreen
   },
   {
-    cardStyle: { backgroundColor: 'white' },
-  },
-);
+    cardStyle: { backgroundColor: 'white' }
+  }
+)
 
 // Export it as the root component
-export default stackNavigator;
+export default stackNavigator
