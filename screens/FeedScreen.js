@@ -50,7 +50,7 @@ export default class FeedScreen extends Component {
     // Iteratively add posts
     let posts = {}
     for (let child of data) {
-      posts[child.id] = child
+      posts[child.key] = child
     }
     this.addPosts(posts)
 

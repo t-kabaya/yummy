@@ -34,13 +34,14 @@ export const getPaged = async ({ size, start }) => {
         // TODO: use user name
         const name = Constants.deviceName
         const reduced = {
-          id: doc.id,
+          key: doc.id,
           name: (name || '').trim(),
           ...post
         }
         data.push(reduced)
       }
     })
+    console.warn({ data })
 
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
     return { data, cursor: lastVisible }
@@ -62,7 +63,6 @@ export const post = async ({ text, image: localUri }) => {
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
     collection.add({
-      id: Constants.installationId + Date.now(),
       userId: Constants.installationId,
       text,
       timestamp: Date.now(),
@@ -77,7 +77,8 @@ export const post = async ({ text, image: localUri }) => {
   }
 }
 
-export const increaseNiceCount = async (id, niceCount = 0) => {
+export const increaseNiceCount = async (id, niceCount) => {
+  console.log('increateNiceCount', id + niceCount)
   if (!(id && niceCount)) return
 
   try {

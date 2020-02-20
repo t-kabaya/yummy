@@ -6,18 +6,22 @@ import Item from './Item'
 
 export default class List extends React.Component {
   renderItem = ({ item }) => <Item {...item} />
-  keyExtractor = item => item.id
+  // keyExtractor = item => item.key
 
   render () {
-    const { onPressFooter, ...props } = this.props
+    const { onPressFooter, data } = this.props
+
+    const newData = data.map(x => ({ ...x, contentId: x.key }))
+    console.log({ listProps: this.props })
     return (
       <FlatList
-        keyExtractor={this.keyExtractor}
+        // keyExtractor={this.keyExtractor}
         ListFooterComponent={footerProps => (
           <Footer {...footerProps} onPress={onPressFooter} />
         )}
         renderItem={this.renderItem}
-        {...props}
+        // {...props}
+        data={newData}
       />
     )
   }

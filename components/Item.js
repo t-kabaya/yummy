@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableHighlight } from 'react-native'
 import { increaseNiceCount } from '../firebase/Fire'
 
 const profileImageSize = 36
@@ -20,7 +20,7 @@ export default class Item extends React.Component {
 
   render () {
     const {
-      id,
+      contentId,
       text,
       name,
       imageWidth,
@@ -49,7 +49,8 @@ export default class Item extends React.Component {
           source={{ uri: image }}
         />
         <Metadata
-          onPress={() => increaseNiceCount(id, niceCount)}
+          contentId={contentId}
+          niceCount={niceCount}
           name={name}
           description={text}
         />
@@ -58,13 +59,15 @@ export default class Item extends React.Component {
   }
 }
 
-const Metadata = ({ name, description }) => (
-  <View style={styles.padding}>
-    <IconBar />
-    <Text style={styles.text}>{name}</Text>
-    <Text style={styles.subtitle}>{description}</Text>
-  </View>
-)
+const Metadata = ({ name, description, contentId, niceCount }) => {
+  return (
+    <View style={styles.padding}>
+      <IconBar contentId={contentId} niceCount={niceCount} />
+      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.subtitle}>{description}</Text>
+    </View>
+  )
+}
 
 const Header = ({ name, image }) => (
   <View style={[styles.row, styles.padding]}>
@@ -80,10 +83,15 @@ const Icon = ({ name }) => (
   <Ionicons style={{ marginRight: 8 }} name={name} size={26} color='black' />
 )
 
-const IconBar = () => (
+const IconBar = ({ contentId, niceCount }) => (
   <View style={styles.row}>
     <View style={styles.row}>
-      <Icon name='ios-heart-empty' />
+      <TouchableHighlight
+        onPress={() => increaseNiceCount(contentId, niceCount)}
+      >
+        <Icon name='ios-heart-empty' />
+      </TouchableHighlight>
+      <Text>{niceCount}</Text>
       <Icon name='ios-chatbubbles' />
       <Icon name='ios-send' />
     </View>
