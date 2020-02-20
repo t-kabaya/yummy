@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { increaseNiceCount } from '../firebase/Fire'
 
 const profileImageSize = 36
 const padding = 12
@@ -18,7 +19,17 @@ export default class Item extends React.Component {
   }
 
   render () {
-    const { text, name, imageWidth, imageHeight, uid, image } = this.props
+    const {
+      id,
+      text,
+      name,
+      imageWidth,
+      imageHeight,
+      uid,
+      image,
+      niceCount
+    } = this.props
+    console.log({ props: this.props })
 
     // Reduce the name to something
     const imgW = imageWidth || this.state.width
@@ -37,7 +48,11 @@ export default class Item extends React.Component {
           }}
           source={{ uri: image }}
         />
-        <Metadata name={name} description={text} />
+        <Metadata
+          onPress={() => increaseNiceCount(id, niceCount)}
+          name={name}
+          description={text}
+        />
       </View>
     )
   }

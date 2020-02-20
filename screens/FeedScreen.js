@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { LayoutAnimation, RefreshControl } from 'react-native'
 
 import List from '../components/List'
-import { getPaged } from '../firebase/Fire'
+import { getPaged, increaseNiceCount } from '../firebase/Fire'
 
 const PAGE_SIZE = 5
 
@@ -16,6 +16,7 @@ export default class FeedScreen extends Component {
 
   componentDidMount () {
     this.makeRemoteRequest()
+    increaseNiceCount()
   }
 
   // Append the item to our states `data` prop
@@ -49,7 +50,7 @@ export default class FeedScreen extends Component {
     // Iteratively add posts
     let posts = {}
     for (let child of data) {
-      posts[child.key] = child
+      posts[child.id] = child
     }
     this.addPosts(posts)
 

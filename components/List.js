@@ -6,7 +6,7 @@ import Item from './Item'
 
 export default class List extends React.Component {
   renderItem = ({ item }) => <Item {...item} />
-  keyExtractor = item => item.key
+  keyExtractor = item => item.id
 
   render () {
     const { onPressFooter, ...props } = this.props

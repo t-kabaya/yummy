@@ -1,4 +1,4 @@
-import userInfo from '../utils/getUserInfo'
+import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
 import uploadPhoto from '../utils/uploadPhoto'
 import Constants from 'expo-constants'
@@ -26,6 +26,7 @@ export const getPaged = async ({ size, start }) => {
     querySnapshot.forEach(function (doc) {
       if (doc.exists) {
         const post = doc.data() || {}
+        console.log({ post })
 
         // Reduce the name
         const user = post.user || {}
@@ -33,7 +34,7 @@ export const getPaged = async ({ size, start }) => {
         // TODO: use user name
         const name = Constants.deviceName
         const reduced = {
-          key: doc.id,
+          id: doc.id,
           name: (name || '').trim(),
           ...post
         }
@@ -61,15 +62,53 @@ export const post = async ({ text, image: localUri }) => {
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
     collection.add({
-      text,
+      id: Constants.installationId + Date.now(),
       userId: Constants.installationId,
+      text,
       timestamp: Date.now(),
       imageWidth: width,
       imageHeight: height,
       image: remoteUri,
-      user: userInfo
+      user: userInfo,
+      niceCount: 0
     })
   } catch ({ message }) {
     alert(message)
   }
 }
+
+export const increaseNiceCount = async (id, niceCount = 0) => {
+  if (!(id && niceCount)) return
+
+  try {
+    var ref = collection.doc('wslFrllZ9pNYJIYtdK52')
+    ref
+      .update({
+        niceCount: niceCount + 1
+      })
+      .then(() => {
+        console.log('Document successfully updated!')
+      })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+// export const fetchFeedIdById = async id => {
+//   try {
+//     const querySnapshot = await collection.where(
+//       'id',
+//       '==',
+//       '127632a1-e4a7-426d-b604-eaf25acd24da1582210855622'
+//     )
+//     querySnapshot.get().then(querySnapshot => {
+//       querySnapshot.forEach(doc => {
+//         // doc.data() is never undefined for query doc snapshots
+//         return doc.id
+//         // console.warn(doc.id, ' => ', doc.data())
+//       })
+//     })
+//   } catch (e) {
+//     console.warn(e)
+//   }
+// }
