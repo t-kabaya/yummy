@@ -13,9 +13,20 @@ const profileImageSize = 36
 const padding = 12
 
 const Item = props => {
+  const {
+    contentId,
+    text,
+    name,
+    imageWidth,
+    imageHeight,
+    uid,
+    image,
+    isINiced
+  } = props
+
   const [_width, setWidth] = useState(null)
   const [_height, setHeight] = useState(null)
-  const [_isNiced, setIsNiced] = useState(true)
+  const [_isNiced, setIsNiced] = useState(isINiced)
 
   useEffect(() => {
     if (props.imageWidth) {
@@ -26,8 +37,6 @@ const Item = props => {
       })
     }
   }, [])
-
-  const { contentId, text, name, imageWidth, imageHeight, uid, image } = props
 
   // Reduce the name to something
   const imgW = imageWidth || _width

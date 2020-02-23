@@ -44,7 +44,40 @@ export const getPaged = async ({ size, start }) => {
         data.push(reduced)
       }
     })
-    console.warn({ data })
+
+    const feedItemsWithNicedUser = []
+    // fetch data from subCollections
+    for (item of data) {
+      const nicedUsers = []
+      const nicedUserRef = await collection
+        .doc(item.key)
+        .collection(COLLECTION_NICED_USER)
+        // .where('userId', '==', userInfo.userId)
+        .get()
+
+      // nicedUserRef size always 1.
+      nicedUserRef.forEach(doc => {
+        const nicedUser = doc.data()
+        console.log({ nicedUser })
+
+        nicedUsers.push(nicedUser)
+      })
+
+      const isINiced = nicedUsers.some(user => {
+        console.log({ dbData: user.userId })
+        console.log({ userInfoData: userInfo.userId })
+
+        // return JSON.stringify(user.userId) == JSON.stringify(userInfo.userId)
+        return user.userId === userInfo.userId
+      })
+      feedItemsWithNicedUser.push({ ...item, nicedUsers, isINiced })
+      // console.log({ nicedUserRef })
+      // const result = nicedUserRef.data()
+      // console.log({ result })
+      // feedItemsWithNicedUser.push(result)
+    }
+
+    console.warn({ feedItemsWithNicedUser })
 
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
     return { data, cursor: lastVisible }
