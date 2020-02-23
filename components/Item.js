@@ -21,14 +21,17 @@ const Item = props => {
     imageHeight,
     uid,
     image,
-    isINiced
+    isINiced,
+    nicedUsers
   } = props
 
   const [_width, setWidth] = useState(null)
   const [_height, setHeight] = useState(null)
-  const [_isNiced, setIsNiced] = useState(isINiced)
+  const [_isNiced, setIsNiced] = useState(false)
 
   useEffect(() => {
+    setIsNiced(isINiced)
+
     if (props.imageWidth) {
       // Get the size of the web image
       Image.getSize(props.image, (width, height) => {
@@ -94,6 +97,10 @@ const Item = props => {
             color='black'
           />
         </View>
+
+        {nicedUsers && nicedUsers[0] && (
+          <Text>「いいね！」した人： {nicedUsers[0].userName}　さん他</Text>
+        )}
 
         <Text style={S.text}>{name}</Text>
         <Text style={S.subtitle}>{text}</Text>
