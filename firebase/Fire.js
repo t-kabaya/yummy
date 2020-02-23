@@ -2,12 +2,15 @@ import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
 import uploadPhoto from '../utils/uploadPhoto'
 import Constants from 'expo-constants'
+// import { userInfo } from '../utils/userInfo'
 
 const firebase = require('firebase')
 // Required for side-effects
 require('firebase/firestore')
 
+// keys
 const collectionName = 'snack-SJucFknGX'
+const COLLECTION_NICED_USER = 'nicedUser'
 
 firebase.initializeApp(require('./firebaseconfig.json'))
 firebase.firestore().settings({ timestampsInSnapshots: true })
@@ -77,20 +80,34 @@ export const post = async ({ text, image: localUri }) => {
   }
 }
 
-export const increaseNiceCount = async (id, niceCount) => {
-  console.log('increateNiceCount', id + niceCount)
-  if (!(id && niceCount)) return
+// TDOO: toggle niceへと名前を変更。
+export const toggleNice = async contentId => {
+  if (!contentId) return
 
   try {
-    var ref = collection.doc('wslFrllZ9pNYJIYtdK52')
-    ref
-      .update({
-        niceCount: niceCount + 1
+    const ref = collection.doc(contentId)
+
+    const nicedUserRef = ref.collection(COLLECTION_NICED_USER)
+
+    const myNice = await nicedUserRef
+      .where('userId', '==', userInfo.userId)
+      .get()
+
+    const isNicedAlready = !myNice.empty
+    if (isNicedAlready) {
+      myNice.forEach(x => {
+        nicedUserRef.doc(x.id).delete()
       })
-      .then(() => {
-        console.log('Document successfully updated!')
+    } else {
+      nicedUserRef.add({
+        userId: userInfo.userId,
+        userName: userInfo.userName
       })
+    }
+    alert('toggled nice')
+    console.log('toggled nice')
   } catch (e) {
+    alert('error')
     console.error(e)
   }
 }

@@ -8,3 +8,42 @@ idは、
 data.data()ではなく、data.idで取得出来るらしい。
 
 いいねを完成させる。
+いいねの仕様
+
+名前を保存。
+
+hooksで、
+stateは、_name, stateは、_nameのように可読性のため_をつける。
+
+react-native-animatableのインストールが失敗する。
+toggleNiceを完成させる。
+
+
+## いいねの仕様
+いいねボタンはトグル式
+最近いいねされた人のリストが表示される。
+
+ユーザーが名前を変更しても、Feed内部の名前は変更されない。これで良いか。
+
+Feedのデータ構造の中に、
+
+nicedUsers: [
+  {
+    userId: 'aoeua',
+    userName: 'kabaya'
+  },
+  {
+    userId: 'aoeuaoeuaoe'
+    userName: 'foo bar'
+  }
+]
+
+firestoreでのデータ設計
+document
+multipul collections
+subcollections within document
+
+
+Nested data in documents
+Arrayや、Mapのように、documentsの中でdataをネストさせることが出来る。
+メリット

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { LayoutAnimation, RefreshControl } from 'react-native'
 
 import List from '../components/List'
-import { getPaged, increaseNiceCount } from '../firebase/Fire'
+import { getPaged } from '../firebase/Fire'
 
 const PAGE_SIZE = 5
 
@@ -16,7 +16,6 @@ export default class FeedScreen extends Component {
 
   componentDidMount () {
     this.makeRemoteRequest()
-    increaseNiceCount()
   }
 
   // Append the item to our states `data` prop

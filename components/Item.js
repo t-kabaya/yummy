@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { Image, StyleSheet, Text, View, TouchableHighlight } from 'react-native'
-import { increaseNiceCount } from '../firebase/Fire'
+import { toggleNice } from '../firebase/Fire'
+// import * as Animatable from 'react-native-animatable'
+
+// const AnimatableIcon = Animatable.createAnimatableComponent(Ionicons)
 
 const profileImageSize = 36
 const padding = 12
@@ -54,9 +57,16 @@ const Item = props => {
       <View style={S.padding}>
         <View style={S.row}>
           <View style={S.row}>
-            <TouchableHighlight
-              onPress={() => increaseNiceCount(contentId, niceCount)}
-            >
+            <TouchableHighlight onPress={() => toggleNice(contentId)}>
+              {/* <AnimatableIcon
+                animation='pulse'
+                easing='ease-out'
+                iterationCount='infinite'
+                style={S.icon}
+                name={'ios-heart-empty'}
+                size={26}
+                color='black'
+              ></AnimatableIcon> */}
               <Ionicons
                 style={S.icon}
                 name={'ios-heart-empty'}
