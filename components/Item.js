@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Alert
 } from 'react-native'
 import { toggleNice } from '../firebase/Fire'
 
@@ -51,6 +52,10 @@ const Item = props => {
     setIsNiced(!_isNiced)
   }
 
+  const showInPreparationMessage = () => {
+    Alert.alert('この機能は開発中です')
+  }
+
   return (
     <View>
       <View style={[S.row, S.padding]}>
@@ -58,7 +63,9 @@ const Item = props => {
           <Image style={S.avatar} source={{ uri: image }} />
           <Text style={S.text}>{name}</Text>
         </View>
-        <Ionicons style={S.icon} name={'ios-more'} size={26} color='black' />
+        <TouchableWithoutFeedback onPress={() => showInPreparationMessage()}>
+          <Ionicons style={S.icon} name={'ios-more'} size={26} color='black' />
+        </TouchableWithoutFeedback>
       </View>
 
       <Image
@@ -77,25 +84,35 @@ const Item = props => {
                 color={_isNiced ? 'red' : 'black'}
               />
             </TouchableWithoutFeedback>
-            <Ionicons
-              style={S.icon}
-              name={'ios-chatbubbles'}
-              size={26}
-              color='black'
-            />
-            <Ionicons
-              style={S.icon}
-              name={'ios-send'}
-              size={26}
-              color='black'
-            />
+            <TouchableWithoutFeedback
+              onPress={() => showInPreparationMessage()}
+            >
+              <Ionicons
+                style={S.icon}
+                name={'ios-chatbubbles'}
+                size={26}
+                color='black'
+              />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => showInPreparationMessage()}
+            >
+              <Ionicons
+                style={S.icon}
+                name={'ios-send'}
+                size={26}
+                color='black'
+              />
+            </TouchableWithoutFeedback>
           </View>
-          <Ionicons
-            style={S.icon}
-            name={'ios-bookmark'}
-            size={26}
-            color='black'
-          />
+          <TouchableWithoutFeedback onPress={() => showInPreparationMessage()}>
+            <Ionicons
+              style={S.icon}
+              name={'ios-bookmark'}
+              size={26}
+              color='black'
+            />
+          </TouchableWithoutFeedback>
         </View>
 
         {nicedUsers && nicedUsers[0] && (
