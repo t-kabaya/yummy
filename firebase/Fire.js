@@ -72,8 +72,7 @@ export const post = async ({ text, image: localUri }) => {
       imageWidth: width,
       imageHeight: height,
       image: remoteUri,
-      user: userInfo,
-      niceCount: 0
+      user: userInfo
     })
   } catch ({ message }) {
     alert(message)
@@ -104,10 +103,7 @@ export const toggleNice = async contentId => {
         userName: userInfo.userName
       })
     }
-    alert('toggled nice')
-    console.log('toggled nice')
   } catch (e) {
-    alert('error')
     console.error(e)
   }
 }

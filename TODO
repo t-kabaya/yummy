@@ -16,7 +16,8 @@ hooksで、
 stateは、_name, stateは、_nameのように可読性のため_をつける。
 
 react-native-animatableのインストールが失敗する。
-toggleNiceを完成させる。
+react-native-animatableを加える。
+初期いいねを獲得する
 
 
 ## いいねの仕様

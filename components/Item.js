@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { Image, StyleSheet, Text, View, TouchableHighlight } from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback
+} from 'react-native'
 import { toggleNice } from '../firebase/Fire'
-// import * as Animatable from 'react-native-animatable'
-
-// const AnimatableIcon = Animatable.createAnimatableComponent(Ionicons)
 
 const profileImageSize = 36
 const padding = 12
@@ -12,6 +15,7 @@ const padding = 12
 const Item = props => {
   const [_width, setWidth] = useState(null)
   const [_height, setHeight] = useState(null)
+  const [_isNiced, setIsNiced] = useState(true)
 
   useEffect(() => {
     if (props.imageWidth) {
@@ -23,21 +27,17 @@ const Item = props => {
     }
   }, [])
 
-  const {
-    contentId,
-    text,
-    name,
-    imageWidth,
-    imageHeight,
-    uid,
-    image,
-    niceCount
-  } = props
+  const { contentId, text, name, imageWidth, imageHeight, uid, image } = props
 
   // Reduce the name to something
   const imgW = imageWidth || _width
   const imgH = imageHeight || _height
   const aspect = imgW / imgH || 1
+
+  const onPressNice = () => {
+    toggleNice(contentId)
+    setIsNiced(!_isNiced)
+  }
 
   return (
     <View>
@@ -57,23 +57,14 @@ const Item = props => {
       <View style={S.padding}>
         <View style={S.row}>
           <View style={S.row}>
-            <TouchableHighlight onPress={() => toggleNice(contentId)}>
-              {/* <AnimatableIcon
-                animation='pulse'
-                easing='ease-out'
-                iterationCount='infinite'
-                style={S.icon}
-                name={'ios-heart-empty'}
-                size={26}
-                color='black'
-              ></AnimatableIcon> */}
+            <TouchableWithoutFeedback onPress={() => onPressNice()}>
               <Ionicons
                 style={S.icon}
-                name={'ios-heart-empty'}
+                name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
                 size={26}
-                color='black'
+                color={_isNiced ? 'red' : 'black'}
               />
-            </TouchableHighlight>
+            </TouchableWithoutFeedback>
             <Ionicons
               style={S.icon}
               name={'ios-chatbubbles'}
