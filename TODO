@@ -12,13 +12,10 @@ data.data()ではなく、data.idで取得出来るらしい。
 
 名前を保存。
 
-hooksで、
-stateは、_name, stateは、_nameのように可読性のため_をつける。
+## ki
+hooksで、stateは、_name, stateは、_nameのように可読性のため_をつける。
 
 react-native-animatableのインストールが失敗する。
-react-native-animatableを加える。
-初期いいねを獲得する
-
 
 ## いいねの仕様
 いいねボタンはトグル式

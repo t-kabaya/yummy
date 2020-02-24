@@ -47,7 +47,7 @@ const stackNavigator = createStackNavigator(
     Main: {
       screen: navigator,
       // Set the title for our app when the tab bar screen is present
-      navigationOptions: { title: 'ヤミー' }
+      navigationOptions: { title: 'Yummy' }
     },
     // This screen will not have a tab bar
     NewPost: NewPostScreen

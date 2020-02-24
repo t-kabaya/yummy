@@ -36,10 +36,10 @@ export default class SelectPhotoScreen extends Component {
     return (
       <View style={styles.container}>
         <Text onPress={this._selectPhoto} style={styles.text}>
-          Select Photo
+          写真を選択
         </Text>
         <Text onPress={this._takePhoto} style={styles.text}>
-          Take Photo
+          写真を撮る
         </Text>
       </View>
     )

@@ -59,11 +59,13 @@ const Item = props => {
   return (
     <View>
       <View style={[S.row, S.padding]}>
-        <View style={S.row}>
-          <Image style={S.avatar} source={{ uri: image }} />
-          <Text style={S.text}>{name}</Text>
-        </View>
-        <TouchableWithoutFeedback onPress={() => showInPreparationMessage()}>
+        <TouchableWithoutFeedback onPress={showInPreparationMessage}>
+          <View style={S.row}>
+            <Image style={S.avatar} source={{ uri: image }} />
+            <Text style={S.text}>{name}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={showInPreparationMessage}>
           <Ionicons style={S.icon} name={'ios-more'} size={26} color='black' />
         </TouchableWithoutFeedback>
       </View>
@@ -76,7 +78,7 @@ const Item = props => {
       <View style={S.padding}>
         <View style={S.row}>
           <View style={S.row}>
-            <TouchableWithoutFeedback onPress={() => onPressNice()}>
+            <TouchableWithoutFeedback onPress={onPressNice}>
               <Ionicons
                 style={S.icon}
                 name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
@@ -84,9 +86,7 @@ const Item = props => {
                 color={_isNiced ? 'red' : 'black'}
               />
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() => showInPreparationMessage()}
-            >
+            <TouchableWithoutFeedback onPress={showInPreparationMessage}>
               <Ionicons
                 style={S.icon}
                 name={'ios-chatbubbles'}
@@ -94,9 +94,7 @@ const Item = props => {
                 color='black'
               />
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress={() => showInPreparationMessage()}
-            >
+            <TouchableWithoutFeedback onPress={showInPreparationMessage}>
               <Ionicons
                 style={S.icon}
                 name={'ios-send'}
@@ -105,7 +103,7 @@ const Item = props => {
               />
             </TouchableWithoutFeedback>
           </View>
-          <TouchableWithoutFeedback onPress={() => showInPreparationMessage()}>
+          <TouchableWithoutFeedback onPress={showInPreparationMessage}>
             <Ionicons
               style={S.icon}
               name={'ios-bookmark'}
@@ -151,7 +149,8 @@ const S = StyleSheet.create({
     marginRight: padding
   },
   icon: {
-    marginRight: 8
+    marginRight: 8,
+    marginLeft: 8
   },
   image: aspect => ({
     backgroundColor: '#D8D8D8',
