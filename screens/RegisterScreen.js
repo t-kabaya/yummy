@@ -8,7 +8,11 @@ import {
   Dimensions,
   TouchableWithoutFeedback
 } from 'react-native'
-import { saveUserName } from '../asyncStorage/userStorage'
+import {
+  getUserName,
+  saveUserName,
+  clearAsyncStorage
+} from '../asyncStorage/userStorage'
 
 const { height, width } = Dimensions.get('window')
 
@@ -19,9 +23,17 @@ const RegisterScreen = () => {
     saveUserName(_name)
   }
 
+  const logUserName = async () => {
+    const userName = await getUserName()
+    console.log('user name: ', userName)
+  }
+  logUserName()
+
   return (
     <KeyboardAvoidingView style={S.container}>
-      <Text style={S.mediumBlackText}>あなたの名前は？</Text>
+      <TouchableWithoutFeedback onPress={clearAsyncStorage}>
+        <Text style={S.mediumBlackText}>あなたの名前は？</Text>
+      </TouchableWithoutFeedback>
       <TextInput
         style={S.textInput}
         onChangeText={name => setName(name)}
