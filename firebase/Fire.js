@@ -29,7 +29,7 @@ export const getPaged = async ({ size, start }) => {
     querySnapshot.forEach(function (doc) {
       if (doc.exists) {
         const post = doc.data() || {}
-        console.log({ post })
+        // console.log({ post })
 
         // Reduce the name
         const user = post.user || {}

@@ -9,7 +9,6 @@ import tabBarIcon from '../utils/tabBarIcon'
 import FeedScreen from '../screens/FeedScreen'
 import NewPostScreen from '../screens/NewPostScreen'
 import SelectPhotoScreen from '../screens/SelectPhotoScreen'
-import RegisterScreen from '../screens/RegisterScreen'
 import { getUserName } from '../asyncStorage/userStorage'
 console.disableYellowBox = true
 
@@ -50,7 +49,7 @@ const createMainNavigator = async () => {
     {
       Main: {
         // if user name not exists, user hasn't register yet
-        screen: getUserName() ? navigator : RegisterScreen,
+        screen: navigator,
         // Set the title for our app when the tab bar screen is present
         navigationOptions: { title: 'Yummy' }
       },

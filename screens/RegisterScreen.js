@@ -16,24 +16,17 @@ import {
 
 const { height, width } = Dimensions.get('window')
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ goToHome }) => {
   const [_name, setName] = useState('')
 
   const onPressDicision = () => {
     saveUserName(_name)
+    goToHome()
   }
-
-  const logUserName = async () => {
-    const userName = await getUserName()
-    console.log('user name: ', userName)
-  }
-  logUserName()
 
   return (
     <KeyboardAvoidingView style={S.container}>
-      <TouchableWithoutFeedback onPress={clearAsyncStorage}>
-        <Text style={S.mediumBlackText}>あなたの名前は？</Text>
-      </TouchableWithoutFeedback>
+      <Text style={S.mediumBlackText}>あなたの名前は？</Text>
       <TextInput
         style={S.textInput}
         onChangeText={name => setName(name)}

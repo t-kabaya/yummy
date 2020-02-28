@@ -13,7 +13,7 @@ export default class List extends React.Component {
 
     // workaround, Flatlist data must not have key property
     const newData = data.map(x => ({ ...x, contentId: x.key }))
-    console.log({ listProps: this.props })
+    // console.log({ listProps: this.props })
     return (
       <FlatList
         // keyExtractor={this.keyExtractor}

@@ -14,9 +14,6 @@ export const saveUserName = async userName => {
 export const getUserName = async () => {
   try {
     const value = await AsyncStorage.getItem(USER_NAME)
-    if (value !== null) {
-      console.log('get user name: ', value)
-    }
     return value
   } catch (e) {
     console.errer(e.message)
