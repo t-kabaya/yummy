@@ -23,7 +23,8 @@ const Item = props => {
     uid,
     image,
     isINiced,
-    nicedUsers
+    nicedUsers,
+    user
   } = props
 
   const [_width, setWidth] = useState(null)
@@ -62,7 +63,7 @@ const Item = props => {
         <TouchableWithoutFeedback onPress={showInPreparationMessage}>
           <View style={S.row}>
             <Image style={S.avatar} source={{ uri: image }} />
-            <Text style={S.text}>{name}</Text>
+            <Text style={S.text}>{user.userName || name}</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={showInPreparationMessage}>

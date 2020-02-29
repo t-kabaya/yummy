@@ -76,6 +76,46 @@ export const getPaged = async ({ size, start }) => {
   }
 }
 
+export const getUserPosts = async () => {
+  console.log('getUserPosts')
+  let feedRef = collection
+  // .orderBy('timestamp', 'desc')
+  // .limit(size)
+  try {
+    const querySnapshot = await feedRef
+      .where('userId', '==', userInfo.userId)
+      .get()
+    console.log({ querySnapshot })
+    const myPageItems = []
+    querySnapshot.forEach(doc => {
+      if (doc.exists) {
+        console.log({ doc })
+
+        const post = doc.data() || {}
+        // console.log({ post })
+
+        // Reduce the name
+        const user = post.user || {}
+
+        // TODO: use user name
+        const name = Constants.deviceName
+        const reduced = {
+          key: doc.id,
+          name: (name || '').trim(),
+          ...post
+        }
+        myPageItems.push(reduced)
+      }
+    })
+
+    console.log({ myPageItems })
+
+    return myPageItems
+  } catch ({ message }) {
+    console.error(message)
+  }
+}
+
 export const uploadPhotoAsync = async uri => {
   const path = `${collectionName}/${Constants.installationId}}.jpg`
   return uploadPhoto(uri, path)
@@ -94,7 +134,7 @@ export const post = async ({ text, image: localUri }) => {
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
     collection.add({
-      userId: Constants.installationId,
+      userId: userInfo.userId,
       text,
       timestamp: Date.now(),
       imageWidth: width,

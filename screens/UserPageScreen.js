@@ -6,24 +6,42 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert
+  Alert,
+  FlatList,
+  Dimensions
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { getUserName, saveUserName } from '../asyncStorage/userStorage'
+import { getUserPosts } from '../firebase/Fire'
+
+const { width } = Dimensions.get('window')
+
+const ListItem = ({ item }) => (
+  <View style={S.listItemContainer}>
+    <Image source={{ uri: item.image }} style={S.listItemImage} />
+    {/* <Text>{JSON.stringify(item)}</Text> */}
+  </View>
+)
 
 const MyPageScreen = () => {
   const [_name, setName] = useState('')
   const [_isLoading, setIsLoading] = useState(true)
+  const [_listData, setListData] = useState([])
 
   useEffect(() => {
     setInitialState()
+    showUserPosts()
   }, [])
 
-  setInitialState = async () => {
+  const setInitialState = async () => {
     const userName = await getUserName()
-    console.log({ userName })
     setName(userName)
     setIsLoading(false)
+  }
+
+  const showUserPosts = async () => {
+    const userPosts = await getUserPosts()
+    setListData(userPosts)
   }
 
   const onChangeText = name => {
@@ -44,17 +62,41 @@ const MyPageScreen = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity>
-          <TextInput value={_name} onChangeText={text => onChangeText(text)} />
+          <TextInput
+            value={_name}
+            onChangeText={text => onChangeText(text)}
+            style={S.userNameText}
+          />
         </TouchableOpacity>
       </View>
+      <FlatList
+        style={S.listContainer}
+        data={_listData}
+        renderItem={({ item }) => <ListItem item={item} />}
+        numColumns={3}
+      />
     </View>
   )
 }
 
 const S = StyleSheet.create({
   container: {
-    padding: 10,
-    flexDirection: 'row'
+    padding: 10
+    // flexDirection: 'col'
+  },
+  userNameText: {
+    marginLeft: 5,
+    fontSize: 15
+  },
+  listItemContainer: {
+    width: width / 3
+  },
+  listContainer: {
+    marginTop: 15
+  },
+  listItemImage: {
+    width: width / 3 - 1,
+    height: width / 3 - 1
   }
 })
 
