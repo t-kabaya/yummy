@@ -3,6 +3,7 @@ import shrinkImageAsync from '../utils/shrinkImageAsync'
 import uploadPhoto from '../utils/uploadPhoto'
 import Constants from 'expo-constants'
 // import { userInfo } from '../utils/userInfo'
+import { getUserName } from '../asyncStorage/userStorage'
 
 const firebase = require('firebase')
 // Required for side-effects
@@ -86,6 +87,11 @@ export const post = async ({ text, image: localUri }) => {
       localUri
     )
 
+    const userName = await getUserName()
+    if (userName !== '') {
+      userInfo.userName = userName
+    }
+
     const remoteUri = await uploadPhotoAsync(reducedImage)
     collection.add({
       userId: Constants.installationId,
@@ -114,6 +120,8 @@ export const toggleNice = async contentId => {
       .where('userId', '==', userInfo.userId)
       .get()
 
+    const userName = await getUserName()
+
     const isNicedAlready = !myNice.empty
     if (isNicedAlready) {
       myNice.forEach(x => {
@@ -122,7 +130,7 @@ export const toggleNice = async contentId => {
     } else {
       nicedUserRef.add({
         userId: userInfo.userId,
-        userName: userInfo.userName
+        userName: userName === '' ? userInfo.userName : userName
       })
     }
   } catch (e) {
