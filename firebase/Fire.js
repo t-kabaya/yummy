@@ -11,7 +11,8 @@ require('firebase/firestore')
 
 // keys
 const collectionName = 'snack-SJucFknGX'
-const COLLECTION_NICED_USER = 'nicedUser'
+const SUBCOLLECTION_NICED_USER = 'nicedUser'
+const SUBCOLLECTION_COMMENT = 'comment'
 
 firebase.initializeApp(require('./firebaseconfig.json'))
 firebase.firestore().settings({ timestampsInSnapshots: true })
@@ -52,7 +53,7 @@ export const getPaged = async ({ size, start }) => {
       const nicedUsers = []
       const nicedUserRef = await collection
         .doc(item.key)
-        .collection(COLLECTION_NICED_USER)
+        .collection(SUBCOLLECTION_NICED_USER)
         .get()
 
       // nicedUserRef size always 1.
@@ -77,7 +78,6 @@ export const getPaged = async ({ size, start }) => {
 }
 
 export const getUserPosts = async () => {
-  console.log('getUserPosts')
   let feedRef = collection
   // .orderBy('timestamp', 'desc')
   // .limit(size)
@@ -85,12 +85,9 @@ export const getUserPosts = async () => {
     const querySnapshot = await feedRef
       .where('userId', '==', userInfo.userId)
       .get()
-    console.log({ querySnapshot })
     const myPageItems = []
     querySnapshot.forEach(doc => {
       if (doc.exists) {
-        console.log({ doc })
-
         const post = doc.data() || {}
         // console.log({ post })
 
@@ -107,8 +104,6 @@ export const getUserPosts = async () => {
         myPageItems.push(reduced)
       }
     })
-
-    console.log({ myPageItems })
 
     return myPageItems
   } catch ({ message }) {
@@ -147,14 +142,13 @@ export const post = async ({ text, image: localUri }) => {
   }
 }
 
-// TDOO: toggle niceへと名前を変更。
 export const toggleNice = async contentId => {
   if (!contentId) return
 
   try {
     const ref = collection.doc(contentId)
 
-    const nicedUserRef = ref.collection(COLLECTION_NICED_USER)
+    const nicedUserRef = ref.collection(SUBCOLLECTION_NICED_USER)
 
     const myNice = await nicedUserRef
       .where('userId', '==', userInfo.userId)
@@ -173,7 +167,27 @@ export const toggleNice = async contentId => {
         userName: userName === '' ? userInfo.userName : userName
       })
     }
-  } catch (e) {
-    console.error(e)
+  } catch ({ message }) {
+    console.error(message)
+  }
+}
+
+export const saveComment = async (contentId, comment) => {
+  if (!contentId || comment === '') return
+
+  try {
+    const feedItemRef = collection.doc(contentId)
+    const commentSubcollection = feedItemRef.collection(SUBCOLLECTION_COMMENT)
+
+    const userName = await getUserName()
+
+    commentSubcollection.add({
+      comment: comment,
+      userId: userInfo.userId,
+      userName: userName === '' ? userInfo.userName : userName,
+      userImage: ''
+    })
+  } catch ({ message }) {
+    console.error(message)
   }
 }

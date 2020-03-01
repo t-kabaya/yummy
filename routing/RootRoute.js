@@ -11,17 +11,13 @@ import NewPostScreen from '../screens/NewPostScreen'
 import SelectPhotoScreen from '../screens/SelectPhotoScreen'
 import UserPageScreen from '../screens/UserPageScreen'
 import { getUserName } from '../asyncStorage/userStorage'
+import PostCommentScreen from '../screens/PostCommentScreen'
 console.disableYellowBox = true
 
 // Create our main tab navigator for moving between the Feed and Photo screens
 const navigator = createBottomTabNavigator(
   {
-    UserPageScreen: {
-      screen: UserPageScreen,
-      navigationOptions: {
-        tabBarIcon: tabBarIcon('account-circle')
-      }
-    },
+    PostCommentScreen,
     // The name `Feed` is used later for accessing screens
     Feed: {
       // Define the component we will use for the Feed screen.
@@ -36,6 +32,12 @@ const navigator = createBottomTabNavigator(
       screen: SelectPhotoScreen,
       navigationOptions: {
         tabBarIcon: tabBarIcon('add-circle')
+      }
+    },
+    UserPageScreen: {
+      screen: UserPageScreen,
+      navigationOptions: {
+        tabBarIcon: tabBarIcon('account-circle')
       }
     }
   },

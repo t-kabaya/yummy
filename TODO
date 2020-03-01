@@ -10,6 +10,8 @@ data.data()ではなく、data.idで取得出来るらしい。
 asyncStorageに使用した名前のデバイス名の代わりに使用する
 
 シェアした際に、ホーム画面へと遷移する。
+postの中で、userInfoだけがネストしているのが気になる。
+userの代わりに、userNameを下手書きしても良いかもしれない。
 
 ## ki
 hooksで、stateは、_name, stateは、_nameのように可読性のため_をつける。
@@ -44,3 +46,7 @@ subcollections within document
 Nested data in documents
 Arrayや、Mapのように、documentsの中でdataをネストさせることが出来る。
 メリット
+
+
+subCollectionsは、案外すぐに破綻しそう。
+なるべくインデックスを貼った、普通のcollectionを普通のsubCollectionの代わりとして使ってあげたほうが良さそう。
