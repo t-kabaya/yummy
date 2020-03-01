@@ -24,7 +24,8 @@ const Item = props => {
     image,
     isINiced,
     nicedUsers,
-    user
+    user,
+    navigation
   } = props
 
   const [_width, setWidth] = useState(null)
@@ -57,6 +58,11 @@ const Item = props => {
     Alert.alert('この機能は開発中です')
   }
 
+  const onPressCommentIcon = () => {
+    console.log({ navigation })
+    navigation.navigate('PostCommentScreen')
+  }
+
   return (
     <View>
       <View style={[S.row, S.padding]}>
@@ -87,7 +93,7 @@ const Item = props => {
                 color={_isNiced ? 'red' : 'black'}
               />
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={showInPreparationMessage}>
+            <TouchableWithoutFeedback onPress={onPressCommentIcon}>
               <Ionicons
                 style={S.icon}
                 name={'ios-chatbubbles'}

@@ -75,6 +75,7 @@ export default class FeedScreen extends Component {
         }
         onPressFooter={this.onPressFooter}
         data={this.state.posts}
+        navigation={this.props.navigation}
       />
     )
   }

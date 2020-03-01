@@ -12,16 +12,16 @@ import SelectPhotoScreen from '../screens/SelectPhotoScreen'
 import UserPageScreen from '../screens/UserPageScreen'
 import { getUserName } from '../asyncStorage/userStorage'
 import PostCommentScreen from '../screens/PostCommentScreen'
+import FeedStack from './FeedStack'
 console.disableYellowBox = true
 
 // Create our main tab navigator for moving between the Feed and Photo screens
 const navigator = createBottomTabNavigator(
   {
-    PostCommentScreen,
     // The name `Feed` is used later for accessing screens
     Feed: {
       // Define the component we will use for the Feed screen.
-      screen: FeedScreen,
+      screen: FeedStack,
       navigationOptions: {
         // Add a cool Material Icon for this screen
         tabBarIcon: tabBarIcon('home')
@@ -60,7 +60,7 @@ const createMainNavigator = async () => {
         // if user name not exists, user hasn't register yet
         screen: navigator,
         // Set the title for our app when the tab bar screen is present
-        navigationOptions: { title: 'Yummy' }
+        navigationOptions: { title: 'Yummy', headerShown: false }
       },
       // This screen will not have a tab bar
       NewPost: NewPostScreen
@@ -78,7 +78,7 @@ const stackNavigator = createStackNavigator(
       // if user name not exists, user hasn't register yet
       screen: navigator,
       // Set the title for our app when the tab bar screen is present
-      navigationOptions: { title: 'Yummy' }
+      navigationOptions: { header: null }
     },
     // This screen will not have a tab bar
     NewPost: NewPostScreen
