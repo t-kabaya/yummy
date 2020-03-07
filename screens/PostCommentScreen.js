@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,8 @@ import {
   saveUserName,
   clearAsyncStorage
 } from '../asyncStorage/userStorage'
-import { saveComment } from '../firebase/Fire'
+import { getComment, postComment } from '../firebase/Fire'
+import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
 
@@ -49,15 +50,29 @@ const Item = ({ item }) => (
 )
 
 const PostCommentScreen = ({ goToHome }) => {
-  const [_name, setName] = useState('')
+  const [_textInputValue, setTextInputValue] = useState('')
+  const [_isLoading, setIsLoading] = useState(true)
+  const [_comments, setComments] = useState([])
+
+  useEffect(() => {
+    setInitialState()
+  }, [])
+
+  const setInitialState = async () => {
+    const comments = await getComment(store.currentContentId)
+    console.log({ commeentInSetInitialState: comments })
+    setComments(comments)
+    setIsLoading(false)
+  }
 
   const onPressDicision = () => {
-    saveUserName(_name)
+    saveUserName(_textInputValue)
     goToHome()
   }
 
   const onPressPost = () => {
-    saveComment('DCObMekOfxUtEzuQg6hS', 'Niceeee')
+    postComment(store.currentContentId, _textInputValue)
+    setTextInputValue('')
   }
 
   return (
@@ -69,7 +84,7 @@ const PostCommentScreen = ({ goToHome }) => {
       keyboardVerticalOffset={100}
     >
       <FlatList
-        data={mockComments}
+        data={_comments}
         renderItem={({ item }) => <Item item={item} />}
       />
       <View style={S.textInputContainer}>
@@ -79,8 +94,8 @@ const PostCommentScreen = ({ goToHome }) => {
         />
         <TextInput
           style={S.textInput}
-          onChangeText={name => setName(name)}
-          value={_name}
+          onChangeText={text => setTextInputValue(text)}
+          value={_textInputValue}
           autoFocus
           placeholder='コメントを追加...'
         />

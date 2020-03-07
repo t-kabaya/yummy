@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native'
 import { toggleNice } from '../firebase/Fire'
+import store from '../store/store'
 
 const profileImageSize = 36
 const padding = 12
@@ -59,7 +60,7 @@ const Item = props => {
   }
 
   const onPressCommentIcon = () => {
-    console.log({ navigation })
+    store.currentContentId = contentId
     navigation.navigate('PostCommentScreen')
   }
 

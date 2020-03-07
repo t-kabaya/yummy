@@ -172,7 +172,31 @@ export const toggleNice = async contentId => {
   }
 }
 
-export const saveComment = async (contentId, comment) => {
+export const getComment = async contentId => {
+  if (!contentId) return []
+
+  try {
+    const ref = collection.doc(contentId)
+
+    const commentRef = ref.collection(SUBCOLLECTION_COMMENT)
+
+    const commentSnapShot = await commentRef.get()
+    console.log({ commentSnapShot: commentSnapShot.size })
+
+    const comments = []
+    commentSnapShot.forEach(document => {
+      console.log({ document: document })
+      comments.push(document.data())
+    })
+
+    return comments
+  } catch ({ message }) {
+    console.error(message)
+    return []
+  }
+}
+
+export const postComment = async (contentId, comment) => {
   if (!contentId || comment === '') return
 
   try {

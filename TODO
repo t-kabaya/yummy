@@ -1,8 +1,3 @@
-TODO
-[重要]
-いいね
-マイページ
-
 FireStore上の全てのデータにIDを与える必要があるな。
 idは、
 data.data()ではなく、data.idで取得出来るらしい。
@@ -13,8 +8,9 @@ asyncStorageに使用した名前のデバイス名の代わりに使用する
 postの中で、userInfoだけがネストしているのが気になる。
 userの代わりに、userNameを下手書きしても良いかもしれない。
 
-## ki
-hooksで、stateは、_name, stateは、_nameのように可読性のため_をつける。
+commmentをアップロード出来るように。
+commentの作成は出来ている。コメントを読み込む。
+コメントをポストした後、textInputの中身を消す。
 
 react-native-animatableのインストールが失敗する。
 
@@ -41,11 +37,6 @@ firestoreでのデータ設計
 document
 multipul collections
 subcollections within document
-
-
-Nested data in documents
-Arrayや、Mapのように、documentsの中でdataをネストさせることが出来る。
-メリット
 
 
 subCollectionsは、案外すぐに破綻しそう。
