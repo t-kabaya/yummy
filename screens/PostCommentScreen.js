@@ -39,12 +39,9 @@ const PostCommentScreen = ({ goToHome }) => {
   }, [])
 
   const setInitialState = async () => {
-    const comments = await getComment(store.currentContentId, comment =>
-      // console.log('callback')
-      setComments(comment)
-    )
-    console.log({ commeentInSetInitialState: comments })
-    setComments(comments)
+    await getComment(store.currentContentId, comment => setComments(comment))
+    // console.log({ commeentInSetInitialState: comments })
+    // setComments(comments)
     setIsLoading(false)
   }
 
