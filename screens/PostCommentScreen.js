@@ -20,29 +20,9 @@ import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
 
-const imageUri =
-  'https://pbs.twimg.com/profile_images/1009220670826295297/qfHNpNPM_400x400.jpg'
-const mockComments = [
-  {
-    userName: 'hasimoto kannna',
-    comment:
-      '亜種名 familiaris はやはりラテン語で、「家庭に属する」といった意味。また、英語: familiar、フランス語: familier など「慣れ親しんだ」を意味する現代語の語源でもある。'
-  },
-  {
-    userName: 'hasimoto kannna',
-    comment:
-      '亜種名 familiaris はやはりラテン語で、「家庭に属する」といった意味。また、英語: familiar、フランス語: familier など「慣れ親しんだ」を意味する現代語の語源でもある。'
-  },
-  {
-    userName: 'hasimoto kannna',
-    comment:
-      '亜種名 familiaris はやはりラテン語で、「家庭に属する」といった意味。また、英語: familiar、フランス語: familier など「慣れ親しんだ」を意味する現代語の語源でもある。'
-  }
-]
-
 const Item = ({ item }) => (
   <View style={S.commentContainer}>
-    <Image source={{ uri: imageUri }} style={S.userIcon} />
+    <Image source={require('../assets/human.png')} style={S.userIcon} />
     <Text style={S.commentText}>
       <Text style={S.userName}>{item.userName}</Text> {item.comment}
     </Text>
@@ -83,7 +63,7 @@ const PostCommentScreen = ({ goToHome }) => {
     <KeyboardAvoidingView
       style={S.container}
       behavior='padding'
-      // keyboardAvoidingViewは、日本語の予測UI分下に下がる。workaroundとして、適当な数字の100を入れた。
+      // CARE: keyboardAvoidingViewは、日本語の予測UI分下に下がる。workaroundとして、適当な数字の100を入れた。
       // この数字は端末ごとに変わる。
       keyboardVerticalOffset={100}
     >
@@ -125,14 +105,12 @@ const S = StyleSheet.create({
     margin: width * 0.03,
     flexDirection: 'row',
     width: width * (1 - 0.03 * 2)
-    // backgroundColor: 'green'
   },
   userIcon: {
     borderRadius: 50,
-    // marginLeft: width * 0.03,
-    // marginHorizontal: width * 0.03,
-    height: width * 0.18,
-    width: width * 0.18
+    height: width * 0.1,
+    width: width * 0.1,
+    marginRight: width * 0.01
   },
   textInputContainer: {
     flexDirection: 'row'
@@ -141,8 +119,10 @@ const S = StyleSheet.create({
     fontWeight: 'bold'
   },
   commentText: {
+    fontSize: width * 0.04,
     marginRight: width * 0.2,
-    marginLeft: width * 0.02
+    marginLeft: width * 0.02,
+    marginTop: width * 0.01
   },
   userImagenearByTextInput: {
     height: width * 0.1,
