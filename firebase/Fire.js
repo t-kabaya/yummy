@@ -179,31 +179,16 @@ export const getComment = async (contentId, cb) => {
   try {
     const ref = collection.doc(contentId)
 
-    const commentRef = ref
+    const commentRef = collection
+      .doc(contentId)
       .collection(SUBCOLLECTION_COMMENT)
       .orderBy('createdAt', 'desc')
 
-    const comments = []
-    commentRef.onSnapshot(function (querySnapshot) {
-      comments.length = 0
-      querySnapshot.forEach(function (doc) {
-        comments.push(doc.data())
-      })
+    commentRef.onSnapshot(querySnapshot => {
+      comments = []
+      querySnapshot.forEach(doc => comments.push(doc.data()))
       cb(comments)
     })
-
-    return comments
-
-    // const commentSnapShot = await commentRef.get()
-    // console.log({ commentSnapShot: commentSnapShot.size })
-
-    // const comments = []
-    // commentSnapShot.forEach(document => {
-    //   console.log({ document: document })
-    //   comments.push(document.data())
-    // })
-
-    // return comments
   } catch ({ message }) {
     console.error(message)
     return []
