@@ -59,7 +59,10 @@ const PostCommentScreen = ({ goToHome }) => {
   }, [])
 
   const setInitialState = async () => {
-    const comments = await getComment(store.currentContentId)
+    const comments = await getComment(store.currentContentId, comment =>
+      // console.log('callback')
+      setComments(comment)
+    )
     console.log({ commeentInSetInitialState: comments })
     setComments(comments)
     setIsLoading(false)
@@ -71,6 +74,7 @@ const PostCommentScreen = ({ goToHome }) => {
   }
 
   const onPressPost = () => {
+    console.log('onPressPost')
     postComment(store.currentContentId, _textInputValue)
     setTextInputValue('')
   }

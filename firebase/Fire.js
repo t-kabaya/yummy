@@ -135,7 +135,8 @@ export const post = async ({ text, image: localUri }) => {
       imageWidth: width,
       imageHeight: height,
       image: remoteUri,
-      user: userInfo
+      user: userInfo,
+      createdAt: firebase.firestore.Timestamp.now()
     })
   } catch ({ message }) {
     alert(message)
@@ -172,24 +173,37 @@ export const toggleNice = async contentId => {
   }
 }
 
-export const getComment = async contentId => {
+export const getComment = async (contentId, cb) => {
   if (!contentId) return []
 
   try {
     const ref = collection.doc(contentId)
 
-    const commentRef = ref.collection(SUBCOLLECTION_COMMENT)
-
-    const commentSnapShot = await commentRef.get()
-    console.log({ commentSnapShot: commentSnapShot.size })
+    const commentRef = ref
+      .collection(SUBCOLLECTION_COMMENT)
+      .orderBy('createdAt', 'desc')
 
     const comments = []
-    commentSnapShot.forEach(document => {
-      console.log({ document: document })
-      comments.push(document.data())
+    commentRef.onSnapshot(function (querySnapshot) {
+      comments.length = 0
+      querySnapshot.forEach(function (doc) {
+        comments.push(doc.data())
+      })
+      cb(comments)
     })
 
     return comments
+
+    // const commentSnapShot = await commentRef.get()
+    // console.log({ commentSnapShot: commentSnapShot.size })
+
+    // const comments = []
+    // commentSnapShot.forEach(document => {
+    //   console.log({ document: document })
+    //   comments.push(document.data())
+    // })
+
+    // return comments
   } catch ({ message }) {
     console.error(message)
     return []
@@ -209,7 +223,8 @@ export const postComment = async (contentId, comment) => {
       comment: comment,
       userId: userInfo.userId,
       userName: userName === '' ? userInfo.userName : userName,
-      userImage: ''
+      userImage: '',
+      createdAt: firebase.firestore.Timestamp.now()
     })
   } catch ({ message }) {
     console.error(message)
