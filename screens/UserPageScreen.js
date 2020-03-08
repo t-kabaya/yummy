@@ -6,9 +6,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert,
   FlatList,
-  Dimensions
+  Dimensions,
+  Platform,
+  StatusBar
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
@@ -48,8 +49,8 @@ const MyPageScreen = () => {
   const setInitialState = async () => {
     const userName = await getUserName()
     setName(userName)
-    const userIcon = await getUserOwnIcon()
-    setUserIcon(userIcon)
+    const icon = await getUserOwnIcon(setUserIcon)
+    setUserIcon(icon)
     setIsLoading(false)
   }
 
@@ -113,7 +114,8 @@ const MyPageScreen = () => {
 
 const S = StyleSheet.create({
   container: {
-    padding: 10
+    padding: 10,
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     // flexDirection: 'col'
   },
   userNameText: {

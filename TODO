@@ -8,9 +8,8 @@ asyncStorageに使用した名前のデバイス名の代わりに使用する
 postの中で、userInfoだけがネストしているのが気になる。
 userの代わりに、userNameを下手書きしても良いかもしれない。
 
-commmentをアップロード出来るように。
-commentの作成は出来ている。コメントを読み込む。
-コメントをポストした後、textInputの中身を消す。
+userテーブルを、firestoreに作成する。
+iconをアップロードした瞬間に、rerenderし、ユーザー画像を変更する。
 
 react-native-animatableのインストールが失敗する。
 

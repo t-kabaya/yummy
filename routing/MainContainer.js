@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar, Platform } from 'react-native'
 import RootRoute from './RootRoute'
 import RegisterScreen from '../screens/RegisterScreen'
 import { getUserName, clearAsyncStorage } from '../asyncStorage/userStorage'
@@ -23,9 +23,9 @@ const MainContainer = () => {
 
   if (_isLoading) return null
   return (
-    <View style={S.container}>
+    <SafeAreaView style={S.container}>
       {_isFirstLaunch ? <RegisterScreen goToHome={goToHome} /> : <RootRoute />}
-    </View>
+    </SafeAreaView>
   )
 }
 
