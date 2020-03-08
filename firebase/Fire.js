@@ -1,6 +1,6 @@
 import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
-import uploadPhoto, { uploadImage } from '../utils/uploadPhoto'
+import uploadPhoto, { uploadImage } from './Storage'
 import Constants from 'expo-constants'
 // import { userInfo } from '../utils/userInfo'
 import { getUserName } from '../asyncStorage/userStorage'
@@ -114,17 +114,16 @@ export const getUserPosts = async () => {
 }
 
 export const uploadPhotoAsync = async uri => {
-  console.log({ uploadPhotoAsync: uri })
-  const path = `${collectionName}/${Constants.installationId}}.jpg`
-  return uploadPhoto(uri, path)
+  const path = `${collectionName}/${userInfo.userId}}.jpg`
+  return uploadImage(uri, path)
 }
 
 export const uploadUserIconAsync = async iconUri => {
   // console.log({ uploadUserIconAsync: iconUri })
   // const { uri, width, height } = await shrinkImageAsync(iconUri)
   const userIcon = 'userIcon'
-  const path = `${userIcon}/${Constants.installationId}.jpg`
-  const iconRemoteUri = await uploadImage(path, iconUri)
+  const path = `${userIcon}/${userInfo.userId}.jpg`
+  const iconRemoteUri = await uploadImage(iconUri, path)
 
   try {
     userCollection.doc(userInfo.userId).set({
