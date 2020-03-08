@@ -19,21 +19,21 @@ console.disableYellowBox = true
 const navigator = createBottomTabNavigator(
   {
     // The name `Feed` is used later for accessing screens
-    Feed: {
-      // Define the component we will use for the Feed screen.
-      screen: FeedStack,
-      navigationOptions: {
-        // Add a cool Material Icon for this screen
-        tabBarIcon: tabBarIcon('home')
-      }
-    },
-    // All the same stuff but for the Photo screen
-    Photo: {
-      screen: SelectPhotoScreen,
-      navigationOptions: {
-        tabBarIcon: tabBarIcon('add-circle')
-      }
-    },
+    // Feed: {
+    //   // Define the component we will use for the Feed screen.
+    //   screen: FeedStack,
+    //   navigationOptions: {
+    //     // Add a cool Material Icon for this screen
+    //     tabBarIcon: tabBarIcon('home')
+    //   }
+    // },
+    // // All the same stuff but for the Photo screen
+    // Photo: {
+    //   screen: SelectPhotoScreen,
+    //   navigationOptions: {
+    //     tabBarIcon: tabBarIcon('add-circle')
+    //   }
+    // },
     UserPageScreen: {
       screen: UserPageScreen,
       navigationOptions: {

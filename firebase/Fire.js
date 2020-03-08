@@ -1,6 +1,6 @@
 import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
-import uploadPhoto from '../utils/uploadPhoto'
+import uploadPhoto, { uploadImage } from '../utils/uploadPhoto'
 import Constants from 'expo-constants'
 // import { userInfo } from '../utils/userInfo'
 import { getUserName } from '../asyncStorage/userStorage'
@@ -13,11 +13,13 @@ require('firebase/firestore')
 const collectionName = 'snack-SJucFknGX'
 const SUBCOLLECTION_NICED_USER = 'nicedUser'
 const SUBCOLLECTION_COMMENT = 'comment'
+const COLLECTION_USER = 'user'
 
 firebase.initializeApp(require('./firebaseconfig.json'))
 firebase.firestore().settings({ timestampsInSnapshots: true })
 
 const collection = firebase.firestore().collection(collectionName)
+const userCollection = firebase.firestore().collection(COLLECTION_USER)
 
 export const getPaged = async ({ size, start }) => {
   let feedRef = collection.orderBy('timestamp', 'desc').limit(size)
@@ -112,9 +114,29 @@ export const getUserPosts = async () => {
 }
 
 export const uploadPhotoAsync = async uri => {
+  console.log({ uploadPhotoAsync: uri })
   const path = `${collectionName}/${Constants.installationId}}.jpg`
   return uploadPhoto(uri, path)
 }
+
+export const uploadUserIconAsync = async iconUri => {
+  // console.log({ uploadUserIconAsync: iconUri })
+  // const { uri, width, height } = await shrinkImageAsync(iconUri)
+  const userIcon = 'userIcon'
+  const path = `${userIcon}/${Constants.installationId}.jpg`
+  const iconRemoteUri = await uploadImage(path, iconUri)
+
+  try {
+    userCollection.doc(userInfo.userId).set({
+      icon: iconRemoteUri,
+      createdAt: firebase.firestore.Timestamp.now()
+    })
+  } catch ({ message }) {
+    console.error(message)
+  }
+}
+
+export const getUserOwnIcon = () => {}
 
 export const post = async ({ text, image: localUri }) => {
   try {

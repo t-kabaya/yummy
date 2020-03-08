@@ -11,10 +11,17 @@ import {
   Dimensions
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions'
 import { getUserName, saveUserName } from '../asyncStorage/userStorage'
-import { getUserPosts } from '../firebase/Fire'
+import { getUserPosts, uploadUserIconAsync } from '../firebase/Fire'
+import getPermission from '../utils/getPermission'
 
 const { width } = Dimensions.get('window')
+
+const options = {
+  allowsEditing: true
+}
 
 const ListItem = ({ item }) => (
   <View style={S.listItemContainer}>
@@ -49,11 +56,26 @@ const MyPageScreen = () => {
     saveUserName(name)
   }
 
+  const onPressIcon = async () => {
+    console.log('onPressIcon')
+    const status = await getPermission(Permissions.CAMERA_ROLL)
+    console.log({ status })
+    if (status) {
+      const result = await ImagePicker.launchImageLibraryAsync(options)
+      console.log({ result })
+      if (!result.cancelled) {
+        alert('success')
+        uploadUserIconAsync(result.uri)
+        // this.props.navigation.navigate('NewPost', { image: result.uri })
+      }
+    }
+  }
+
   if (_isLoading) return null
   return (
     <View style={S.container}>
       <View>
-        <TouchableOpacity onPress={() => Alert.alert('この機能は準備中です')}>
+        <TouchableOpacity onPress={() => onPressIcon()}>
           <MaterialIcons
             style={{ backgroundColor: 'transparent' }}
             name={'account-circle'}
