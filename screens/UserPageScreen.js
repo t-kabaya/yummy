@@ -14,7 +14,11 @@ import { MaterialIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
 import { getUserName, saveUserName } from '../asyncStorage/userStorage'
-import { getUserPosts, uploadUserIconAsync } from '../firebase/Fire'
+import {
+  getUserPosts,
+  uploadUserIconAsync,
+  getUserOwnIcon
+} from '../firebase/Fire'
 import getPermission from '../utils/getPermission'
 
 const { width } = Dimensions.get('window')
@@ -34,6 +38,7 @@ const MyPageScreen = () => {
   const [_name, setName] = useState('')
   const [_isLoading, setIsLoading] = useState(true)
   const [_listData, setListData] = useState([])
+  const [_userIcon, setUserIcon] = useState('')
 
   useEffect(() => {
     setInitialState()
@@ -43,6 +48,8 @@ const MyPageScreen = () => {
   const setInitialState = async () => {
     const userName = await getUserName()
     setName(userName)
+    const userIcon = await getUserOwnIcon()
+    setUserIcon(userIcon)
     setIsLoading(false)
   }
 
@@ -64,7 +71,6 @@ const MyPageScreen = () => {
       const result = await ImagePicker.launchImageLibraryAsync(options)
       console.log({ result })
       if (!result.cancelled) {
-        alert('success')
         uploadUserIconAsync(result.uri)
         // this.props.navigation.navigate('NewPost', { image: result.uri })
       }
@@ -76,12 +82,16 @@ const MyPageScreen = () => {
     <View style={S.container}>
       <View>
         <TouchableOpacity onPress={() => onPressIcon()}>
-          <MaterialIcons
-            style={{ backgroundColor: 'transparent' }}
-            name={'account-circle'}
-            color={'gray'}
-            size={110}
-          />
+          {_userIcon ? (
+            <Image source={{ uri: _userIcon }} style={S.userIcon} />
+          ) : (
+            <MaterialIcons
+              style={{ backgroundColor: 'transparent' }}
+              name={'account-circle'}
+              color={'gray'}
+              size={110}
+            />
+          )}
         </TouchableOpacity>
         <TouchableOpacity>
           <TextInput
@@ -119,6 +129,11 @@ const S = StyleSheet.create({
   listItemImage: {
     width: width / 3 - 1,
     height: width / 3 - 1
+  },
+  userIcon: {
+    height: 100,
+    width: 100,
+    borderRadius: 50
   }
 })
 

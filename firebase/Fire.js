@@ -136,7 +136,13 @@ export const uploadUserIconAsync = async iconUri => {
   }
 }
 
-export const getUserOwnIcon = () => {}
+export const getUserOwnIcon = async () => {
+  try {
+    return (await userCollection.doc(userInfo.userId).get()).data().icon
+  } catch ({ message }) {
+    return null
+  }
+}
 
 export const post = async ({ text, image: localUri }) => {
   try {
