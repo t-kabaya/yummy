@@ -14,6 +14,7 @@ const collectionName = 'snack-SJucFknGX'
 const SUBCOLLECTION_NICED_USER = 'nicedUser'
 const SUBCOLLECTION_COMMENT = 'comment'
 const COLLECTION_USER = 'user'
+const STORAGE_PATH_USER_ICON = 'userIcon'
 
 firebase.initializeApp(require('./firebaseconfig.json'))
 firebase.firestore().settings({ timestampsInSnapshots: true })
@@ -30,7 +31,7 @@ export const getPaged = async ({ size, start }) => {
 
     const querySnapshot = await feedRef.get()
     const feedData = []
-    querySnapshot.forEach(function (doc) {
+    querySnapshot.forEach(doc => {
       if (doc.exists) {
         const post = doc.data() || {}
         // console.log({ post })
@@ -72,8 +73,15 @@ export const getPaged = async ({ size, start }) => {
       })
     }
 
+    const itemsWithNicedUserAndUserIcon = []
+    for (item of feedItemsWithNicedUser) {
+      const userData = await userCollection.doc(userInfo.userId).get()
+      const userIcon = userData.data().icon
+      itemsWithNicedUserAndUserIcon.push({ ...item, userIcon })
+    }
+
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
-    return { data: feedItemsWithNicedUser, cursor: lastVisible }
+    return { data: itemsWithNicedUserAndUserIcon, cursor: lastVisible }
   } catch ({ message }) {
     console.error(message)
   }
@@ -119,10 +127,7 @@ export const uploadPhotoAsync = async uri => {
 }
 
 export const uploadUserIconAsync = async iconUri => {
-  // console.log({ uploadUserIconAsync: iconUri })
-  // const { uri, width, height } = await shrinkImageAsync(iconUri)
-  const userIcon = 'userIcon'
-  const path = `${userIcon}/${userInfo.userId}.jpg`
+  const path = `${STORAGE_PATH_USER_ICON}/${userInfo.userId}.jpg`
   const iconRemoteUri = await uploadImage(iconUri, path)
 
   try {

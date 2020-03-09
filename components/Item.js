@@ -26,7 +26,8 @@ const Item = props => {
     isINiced,
     nicedUsers,
     user,
-    navigation
+    navigation,
+    userIcon
   } = props
 
   const [_width, setWidth] = useState(null)
@@ -69,7 +70,7 @@ const Item = props => {
       <View style={[S.row, S.padding]}>
         <TouchableWithoutFeedback onPress={showInPreparationMessage}>
           <View style={S.row}>
-            <Image style={S.avatar} source={{ uri: image }} />
+            <Image style={S.avatar} source={{ uri: userIcon || image }} />
             <Text style={S.text}>{user.userName || name}</Text>
           </View>
         </TouchableWithoutFeedback>

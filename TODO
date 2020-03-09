@@ -4,4 +4,4 @@
 
 ・react-native-animatableのインストールが失敗する。
 
-uploadImageの名前を、fireStoreへと変え、リファクタリングする。
+userIconを、至る所に適用する。（FeedScreen, commentScreen）
