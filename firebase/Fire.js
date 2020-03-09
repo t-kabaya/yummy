@@ -219,7 +219,6 @@ export const getComment = async (contentId, cb) => {
     commentRef.onSnapshot(querySnapshot => {
       comments = []
       querySnapshot.forEach(doc => comments.push(doc.data()))
-
       cb(comments)
     })
   } catch ({ message }) {
