@@ -22,7 +22,7 @@ const { height, width } = Dimensions.get('window')
 
 const Item = ({ item }) => (
   <View style={S.commentContainer}>
-    <Image source={require('../assets/human.png')} style={S.userIcon} />
+    <Image source={{ uri: item.userIcon }} style={S.userIcon} />
     <Text style={S.commentText}>
       <Text style={S.userName}>{item.userName}</Text> {item.comment}
     </Text>
@@ -40,8 +40,6 @@ const PostCommentScreen = ({ goToHome }) => {
 
   const setInitialState = async () => {
     await getComment(store.currentContentId, comment => setComments(comment))
-    // console.log({ commeentInSetInitialState: comments })
-    // setComments(comments)
     setIsLoading(false)
   }
 
@@ -51,7 +49,6 @@ const PostCommentScreen = ({ goToHome }) => {
   }
 
   const onPressPost = () => {
-    console.log('onPressPost')
     postComment(store.currentContentId, _textInputValue)
     setTextInputValue('')
   }

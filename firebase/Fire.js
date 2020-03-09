@@ -76,7 +76,7 @@ export const getPaged = async ({ size, start }) => {
     const itemsWithNicedUserAndUserIcon = []
     for (item of feedItemsWithNicedUser) {
       const userData = await userCollection.doc(userInfo.userId).get()
-      const userIcon = userData.data().icon
+      const userIcon = await _getUserOwnIcon()
       itemsWithNicedUserAndUserIcon.push({ ...item, userIcon })
     }
 
@@ -133,7 +133,7 @@ export const uploadUserIconAsync = async iconUri => {
   try {
     userCollection.doc(userInfo.userId).set({
       icon: iconRemoteUri,
-      createdAt: firebase.firestore.Timestamp.now()
+      createdAt: now()
     })
   } catch ({ message }) {
     console.error(message)
@@ -167,12 +167,12 @@ export const post = async ({ text, image: localUri }) => {
     collection.add({
       userId: userInfo.userId,
       text,
-      timestamp: Date.now(),
+      timestamp: now(),
       imageWidth: width,
       imageHeight: height,
       image: remoteUri,
       user: userInfo,
-      createdAt: firebase.firestore.Timestamp.now()
+      createdAt: now()
     })
   } catch ({ message }) {
     alert(message)
@@ -210,8 +210,6 @@ export const toggleNice = async contentId => {
 }
 
 export const getComment = async (contentId, cb) => {
-  if (!contentId) return []
-
   try {
     const commentRef = collection
       .doc(contentId)
@@ -221,6 +219,7 @@ export const getComment = async (contentId, cb) => {
     commentRef.onSnapshot(querySnapshot => {
       comments = []
       querySnapshot.forEach(doc => comments.push(doc.data()))
+
       cb(comments)
     })
   } catch ({ message }) {
@@ -237,15 +236,30 @@ export const postComment = async (contentId, comment) => {
     const commentSubcollection = feedItemRef.collection(SUBCOLLECTION_COMMENT)
 
     const userName = await getUserName()
+    const userIcon = await _getUserOwnIcon()
 
     commentSubcollection.add({
-      comment: comment,
+      comment,
       userId: userInfo.userId,
       userName: userName === '' ? userInfo.userName : userName,
-      userImage: '',
-      createdAt: firebase.firestore.Timestamp.now()
+      userIcon,
+      createdAt: now()
     })
   } catch ({ message }) {
     console.error(message)
   }
 }
+
+const _getUserOwnIcon = async () => {
+  try {
+    const userData = await userCollection.doc(userInfo.userId).get()
+    const userIcon = userData.data().icon
+
+    return userIcon
+  } catch ({ message }) {
+    console.error(message)
+  }
+}
+
+// use server time instead of mobile time
+const now = () => firebase.firestore.Timestamp.now()
