@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Ionicons } from '@expo/vector-icons'
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons
+} from '@expo/vector-icons'
 import {
   Image,
   StyleSheet,
@@ -60,6 +64,17 @@ const Item = props => {
     Alert.alert('この機能は開発中です')
   }
 
+  const sendReport = () => {
+    Alert.alert(
+      '不適切な投稿ですか？',
+      '',
+      [{ text: 'はい' }, { text: 'いいえ' }],
+      {
+        cancelable: false
+      }
+    )
+  }
+
   const onPressCommentIcon = () => {
     store.currentContentId = contentId
     navigation.navigate('PostCommentScreen')
@@ -74,8 +89,15 @@ const Item = props => {
             <Text style={S.text}>{user.userName || name}</Text>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={showInPreparationMessage}>
-          <Ionicons style={S.icon} name={'ios-more'} size={26} color='black' />
+        <TouchableWithoutFeedback onPress={sendReport}>
+          <View style={S.iconContainer}>
+            <Ionicons
+              style={S.icon}
+              name={'ios-more'}
+              size={26}
+              color='black'
+            />
+          </View>
         </TouchableWithoutFeedback>
       </View>
 
@@ -88,38 +110,46 @@ const Item = props => {
         <View style={S.row}>
           <View style={S.row}>
             <TouchableWithoutFeedback onPress={onPressNice}>
-              <Ionicons
-                style={S.icon}
-                name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
-                size={26}
-                color={_isNiced ? 'red' : 'black'}
-              />
+              <View style={S.iconContainer}>
+                <Ionicons
+                  style={S.icon}
+                  name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
+                  size={30}
+                  color={_isNiced ? 'red' : 'black'}
+                />
+              </View>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={onPressCommentIcon}>
-              <Ionicons
-                style={S.icon}
-                name={'ios-chatbubbles'}
-                size={26}
-                color='black'
-              />
+              <View style={S.iconContainer}>
+                <MaterialCommunityIcons
+                  style={{ backgroundColor: 'transparent' }}
+                  name={'chat-processing'}
+                  color={'black'}
+                  size={30}
+                />
+              </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={showInPreparationMessage}>
-              <Ionicons
-                style={S.icon}
-                name={'ios-send'}
-                size={26}
-                color='black'
-              />
-            </TouchableWithoutFeedback>
+            {/* <TouchableWithoutFeedback onPress={showInPreparationMessage}>
+              <View style={S.iconContainer}>
+                <Ionicons
+                  style={S.icon}
+                  name={'ios-send'}
+                  size={30}
+                  color='black'
+                />
+              </View>
+            </TouchableWithoutFeedback> */}
           </View>
-          <TouchableWithoutFeedback onPress={showInPreparationMessage}>
-            <Ionicons
-              style={S.icon}
-              name={'ios-bookmark'}
-              size={26}
-              color='black'
-            />
-          </TouchableWithoutFeedback>
+          {/* <TouchableWithoutFeedback onPress={showInPreparationMessage}>
+            <View style={S.iconContainer}>
+              <Ionicons
+                style={S.icon}
+                name={'ios-bookmark'}
+                size={30}
+                color='black'
+              />
+            </View>
+          </TouchableWithoutFeedback> */}
         </View>
 
         {nicedUsers && nicedUsers[0] && (
@@ -157,9 +187,13 @@ const S = StyleSheet.create({
     resizeMode: 'cover',
     marginRight: padding
   },
+  iconContainer: {
+    padding: 2
+  },
   icon: {
-    marginRight: 8,
-    marginLeft: 8
+    marginRight: 9,
+    marginLeft: 9,
+    marginVertical: 3
   },
   image: aspect => ({
     backgroundColor: '#D8D8D8',
