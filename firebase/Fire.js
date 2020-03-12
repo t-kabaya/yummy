@@ -10,7 +10,7 @@ const firebase = require('firebase')
 require('firebase/firestore')
 
 // keys
-const collectionName = 'snack-SJucFknGX'
+const collectionName = 'postCollection'
 const SUBCOLLECTION_NICED_USER = 'nicedUser'
 const SUBCOLLECTION_COMMENT = 'comment'
 const COLLECTION_USER = 'user'

@@ -5,3 +5,5 @@
 ・react-native-animatableのインストールが失敗する。
 
 userIconを、至る所に適用する。（FeedScreen, commentScreen）
+
+投稿の仕方instaと同じにする。
