@@ -156,7 +156,6 @@ const Item = props => {
           <Text>「いいね！」した人： {nicedUsers[0].userName}　さん他</Text>
         )}
 
-        <Text style={S.text}>{name}</Text>
         <Text style={S.subtitle}>{text}</Text>
       </View>
     </View>
