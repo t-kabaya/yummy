@@ -122,7 +122,7 @@ export const getUserPosts = async () => {
 }
 
 export const uploadPhotoAsync = async uri => {
-  const path = `${collectionName}/${userInfo.userId}}.jpg`
+  const path = `${collectionName}/${userInfo.userId}.jpg`
   return uploadImage(uri, path)
 }
 
