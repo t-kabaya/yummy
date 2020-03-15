@@ -1,0 +1,9 @@
+{
+  "apiKey": "AIzaSyCu6U5DZ7NqLIl0sY2JrFNoTlMzbE3N9A0",
+  "authDomain": "yummy-stg.firebaseapp.com",
+  "databaseURL": "https://yummy-stg.firebaseio.com",
+  "projectId": "yummy-stg",
+  "storageBucket": "yummy-stg.appspot.com",
+  "messagingSenderId": "669094775372",
+  "appId": "1:669094775372:web:94c5cd95a51473c4e402e9"
+}

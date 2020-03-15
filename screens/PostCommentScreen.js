@@ -70,9 +70,7 @@ const PostCommentScreen = ({ goToHome }) => {
       />
       <View style={S.textInputContainer}>
         <Image
-          source={
-            _userIcon ? { uri: _userIcon } : require('../assets/human.png')
-          }
+          source={false ? { uri: _userIcon } : require('../assets/human.png')}
           style={S.userImagenearByTextInput}
         />
         <TextInput

@@ -17,6 +17,8 @@ const COLLECTION_USER = 'user'
 const STORAGE_PATH_USER_ICON = 'userIcon'
 
 firebase.initializeApp(require('./firebaseconfig.json'))
+// firebase.initializeApp(require('./firebaseconfigStaging.json'))
+
 firebase.firestore().settings({ timestampsInSnapshots: true })
 
 const collection = firebase.firestore().collection(collectionName)
@@ -143,7 +145,7 @@ export const uploadUserIconAsync = async iconUri => {
 export const getUserOwnIcon = async cb => {
   try {
     userCollection.doc(userInfo.userId).onSnapshot(doc => {
-      const icon = doc.data().icon
+      const icon = doc && doc.data() && doc.data().icon
       cb(icon)
       return icon
     })
@@ -241,7 +243,7 @@ export const postComment = async (contentId, comment) => {
       comment,
       userId: userInfo.userId,
       userName: userName === '' ? userInfo.userName : userName,
-      userIcon,
+      userIcon: userIcon || null,
       createdAt: now()
     })
   } catch ({ message }) {
@@ -252,7 +254,7 @@ export const postComment = async (contentId, comment) => {
 export const _getUserOwnIcon = async () => {
   try {
     const userData = await userCollection.doc(userInfo.userId).get()
-    const userIcon = userData.data().icon
+    const userIcon = userData && userData.data() && userData.data().icon
 
     return userIcon
   } catch ({ message }) {

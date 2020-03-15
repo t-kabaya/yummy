@@ -21,7 +21,7 @@
     },
     "android": {
       "package": "com.kabainc.yummy",
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }

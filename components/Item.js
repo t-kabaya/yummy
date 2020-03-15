@@ -85,7 +85,12 @@ const Item = props => {
       <View style={[S.row, S.padding]}>
         <TouchableWithoutFeedback onPress={showInPreparationMessage}>
           <View style={S.row}>
-            <Image style={S.avatar} source={{ uri: userIcon || image }} />
+            <Image
+              style={S.avatar}
+              source={
+                userIcon ? { uri: userIcon } : require('../assets/human.png')
+              }
+            />
             <Text style={S.text}>{user.userName || name}</Text>
           </View>
         </TouchableWithoutFeedback>
