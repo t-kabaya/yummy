@@ -249,7 +249,7 @@ export const postComment = async (contentId, comment) => {
   }
 }
 
-const _getUserOwnIcon = async () => {
+export const _getUserOwnIcon = async () => {
   try {
     const userData = await userCollection.doc(userInfo.userId).get()
     const userIcon = userData.data().icon

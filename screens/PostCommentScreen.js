@@ -15,7 +15,7 @@ import {
   saveUserName,
   clearAsyncStorage
 } from '../asyncStorage/userStorage'
-import { getComment, postComment } from '../firebase/Fire'
+import { getComment, postComment, _getUserOwnIcon } from '../firebase/Fire'
 import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
@@ -33,6 +33,7 @@ const PostCommentScreen = ({ goToHome }) => {
   const [_textInputValue, setTextInputValue] = useState('')
   const [_isLoading, setIsLoading] = useState(true)
   const [_comments, setComments] = useState([])
+  const [_userIcon, setUserIcon] = useState(null)
 
   useEffect(() => {
     setInitialState()
@@ -40,6 +41,8 @@ const PostCommentScreen = ({ goToHome }) => {
 
   const setInitialState = async () => {
     await getComment(store.currentContentId, comment => setComments(comment))
+    const userIcon = await _getUserOwnIcon()
+    setUserIcon(userIcon)
     setIsLoading(false)
   }
 
@@ -67,7 +70,9 @@ const PostCommentScreen = ({ goToHome }) => {
       />
       <View style={S.textInputContainer}>
         <Image
-          source={require('../assets/human.png')}
+          source={
+            _userIcon ? { uri: _userIcon } : require('../assets/human.png')
+          }
           style={S.userImagenearByTextInput}
         />
         <TextInput
@@ -122,7 +127,8 @@ const S = StyleSheet.create({
     height: width * 0.1,
     width: width * 0.1,
     // marginRight: width * 0.1,
-    marginHorizontal: width * 0.05
+    marginHorizontal: width * 0.05,
+    borderRadius: 50
   },
 
   textInput: {
