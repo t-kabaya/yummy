@@ -7,19 +7,20 @@ import { post } from '../firebase/Fire'
 
 export default class NewPostScreen extends React.Component<Props> {
   static navigationOptions = ({ navigation }) => ({
-    title: 'New Post',
+    title: '新しい投稿',
     headerRight: (
       <HeaderButtons IconComponent={Ionicons} iconSize={23} color='black'>
         <HeaderButtons.Item
-          title='Share'
+          title='シェア'
           onPress={() => {
             const text = navigation.getParam('text')
             const image = navigation.getParam('image')
             if (text && image) {
               navigation.goBack()
               post({ text: text.trim(), image })
+              navigation.navigate('Feed')
             } else {
-              alert('Need valid description')
+              alert('説明文がありません')
             }
           }}
         />
@@ -40,7 +41,7 @@ export default class NewPostScreen extends React.Component<Props> {
         <TextInput
           multiline
           style={{ flex: 1, paddingHorizontal: 16 }}
-          placeholder='Add a neat description...'
+          placeholder='説明文'
           onChangeText={text => {
             this.setState({ text })
             this.props.navigation.setParams({ text })
