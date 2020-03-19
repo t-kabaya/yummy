@@ -9,7 +9,8 @@ import {
   FlatList,
   Dimensions,
   Platform,
-  StatusBar
+  StatusBar,
+  TouchableHighlight
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
@@ -21,6 +22,8 @@ import {
   getUserOwnIcon
 } from '../firebase/Fire'
 import getPermission from '../utils/getPermission'
+import color from '../assets/color'
+import { editUserProfileText } from '../assets/constant/text.ts'
 
 const { width } = Dimensions.get('window')
 
@@ -102,6 +105,11 @@ const MyPageScreen = () => {
           />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity>
+        <View style={S.editProfileButtonContainer}>
+          <Text style={S.editProfileButtonText}>{editUserProfileText}</Text>
+        </View>
+      </TouchableOpacity>
       <FlatList
         style={S.listContainer}
         data={_listData}
@@ -114,11 +122,14 @@ const MyPageScreen = () => {
 
 const S = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
-    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-    // flexDirection: 'col'
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: color.profileBack
+    // flexDirection: 'col',
   },
   userNameText: {
+    marginTop: width * 0.05,
     marginLeft: 5,
     fontSize: 15
   },
@@ -136,6 +147,22 @@ const S = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 50
+  },
+  editProfileButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: width * 0.9,
+    height: 30,
+    borderRadius: 10,
+    borderWidth: 1,
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    marginTop: width * 0.07
+  },
+  editProfileButtonText: {
+    fontSize: width * 0.03,
+    fontWeight: 'bold'
   }
 })
 
