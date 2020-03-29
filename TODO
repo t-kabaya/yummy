@@ -1,0 +1,24 @@
+・シェアした際に、ホーム画面へと遷移する。
+・postの中で、userInfoだけがネストしているのが気になる。
+・userの代わりに、userNameを下手書きしても良いかもしれない。
+
+・react-native-animatableのインストールが失敗する。
+
+[無理] 投稿の仕方instaと同じにする。
+
+staging環境を作成する
+
+やはり、一度投稿したpostのユーザーネームを変える必要がある。
+説明文が長かった場合、正常に表示されない。
+yarn addが出来ない問題を直す。
+npxを使用出来ない問題も直す。
+usr/local/binにも
+usr/binにも
+npmが存在しない。
+どういうことだ？
+ダウンロードしてきて、直接npmを入れるしかないのかな？
+私のmac環境が壊れているだけなので、clound shellで、react-native-animatableを、
+yarn add してしまえば、
+
+
+staging環境を用意する。
