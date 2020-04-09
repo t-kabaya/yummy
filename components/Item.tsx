@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Ionicons,
-  MaterialIcons,
   MaterialCommunityIcons
 } from '@expo/vector-icons'
 import {
@@ -9,11 +8,16 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  Dimensions,
+  Animated
 } from 'react-native'
 import Text from '../components/Text.tsx'
 import { toggleNice } from '../firebase/Fire'
 import store from '../store/store'
+import * as Animatable from 'react-native-animatable'
+import DoubleTap from '../components/DoubleTap'
+AnimatableIonicons = Animatable.createAnimatableComponent(Ionicons)
 
 const profileImageSize = 36
 
@@ -32,11 +36,12 @@ export default props => {
     navigation,
     userIcon
   } = props
-
+  
   const [_width, setWidth] = useState(null)
   const [_height, setHeight] = useState(null)
   const [_isNiced, setIsNiced] = useState(false)
-
+  const animatedValue = useRef(new Animated.Value(0)).current
+  
   useEffect(() => {
     setIsNiced(isINiced)
 
@@ -57,6 +62,8 @@ export default props => {
   const onPressNice = () => {
     toggleNice(contentId)
     setIsNiced(!_isNiced)
+
+    displayBigHeartAnimation()
   }
 
   const showInPreparationMessage = () => {
@@ -68,15 +75,50 @@ export default props => {
       '不適切な投稿ですか？',
       '',
       [{ text: 'はい' }, { text: 'いいえ' }],
-      {
-        cancelable: false
-      }
+      { cancelable: false }
     )
   }
 
   const onPressCommentIcon = () => {
     store.currentContentId = contentId
     navigation.navigate('PostCommentScreen')
+  }
+
+  // const animatedValue = useRef(new Animated.Value(0.5)).current
+
+  const displayBigHeartAnimation = () => {    
+    if (_isNiced) return    
+    Animated.sequence([
+      Animated.spring(animatedValue, { toValue: 1 }),
+      Animated.spring(animatedValue, { toValue: 0 })
+    ]).start()
+  }
+
+  const renderHeartAnimation = () => {
+    const imageStyles = [
+      S.overlayHeart,
+      {zIndex: 1},
+      {
+        opacity: animatedValue,
+        transform: [
+          {
+            scale: animatedValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.7, 1.5],
+            }),
+          },
+        ],
+      },
+    ]
+
+    return (
+      <View style={S.overlay}>
+        <Animated.Image
+          source={require('../assets/images/heart.png')}
+          style={imageStyles}
+        />
+      </View>
+    )
   }
 
   return (
@@ -89,7 +131,7 @@ export default props => {
               source={
                 userIcon ? { uri: userIcon } : require('../assets/human.png')
               }
-            />
+              />
             <Text style={S.text}>{user.userName || name}</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -100,22 +142,26 @@ export default props => {
               name={'ios-more'}
               size={26}
               color='black'
-            />
+              />
           </View>
         </TouchableWithoutFeedback>
       </View>
 
-      <Image
-        resizeMode='contain'
-        style={S.image(aspect)}
-        source={{ uri: image }}
-      />
+      {renderHeartAnimation()}
+      <DoubleTap onDoubleTap={onPressNice}>
+        <Image
+          resizeMode='contain'
+          style={S.image(aspect)}
+          source={{ uri: image }}
+        />
+      </DoubleTap>
+
       <View style={S.padding}>
         <View style={S.row}>
           <View style={S.row}>
             <TouchableWithoutFeedback onPress={onPressNice}>
               <View style={S.iconContainer}>
-                <Ionicons
+                <AnimatableIonicons animation="rubberBand" easing="ease-out" 
                   style={S.icon}
                   name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
                   size={30}
@@ -205,5 +251,35 @@ const S = StyleSheet.create({
     backgroundColor: '#D8D8D8',
     width: '100%',
     aspectRatio: aspect
-  })
+  }),
+
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  iconRow: {
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    marginTop: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 15
+  },
+  heartIcon: {
+    width: 20,
+    height: 20
+  },
+  overlay: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
+  },
+  overlayHeart: {
+    tintColor: 'white'
+  }
 })
