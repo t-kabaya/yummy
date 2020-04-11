@@ -1,4 +1,4 @@
-import { collection, now, SUBCOLLECTION_NICED_USER, uploadPhotoAsync } from './Fire'
+import { postCollection, now, SUBCOLLECTION_NICED_USER, uploadPhotoAsync } from './Fire'
 import Constants from 'expo-constants'
 import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
@@ -6,7 +6,7 @@ import { getUserName } from '../asyncStorage/userStorage'
 import { _getUserOwnIcon } from './UserFireStore'
 
 export const getPaged = async ({ size, start }: {size: number, start: number}) => {
-  let feedRef = collection.orderBy('timestamp', 'desc').limit(size)
+  let feedRef = postCollection.orderBy('timestamp', 'desc').limit(size)
   try {
     if (start) {
       feedRef = feedRef.startAfter(start)
@@ -33,7 +33,7 @@ export const getPaged = async ({ size, start }: {size: number, start: number}) =
     // fetch data from subCollections
     for (item of feedData) {
       const nicedUsers: any[] = []
-      const nicedUserRef = await collection
+      const nicedUserRef = await postCollection
         .doc(item.key)
         .collection(SUBCOLLECTION_NICED_USER)
         .get()
@@ -77,7 +77,7 @@ export const post = async ({ text, image: localUri }: {text: string, image: stri
     }
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
-    collection.add({
+    postCollection.add({
       userId: userInfo.userId,
       text,
       timestamp: now(),

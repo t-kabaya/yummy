@@ -1,4 +1,4 @@
-import { collection, SUBCOLLECTION_NICED_USER } from './Fire'
+import { postCollection, SUBCOLLECTION_NICED_USER } from './Fire'
 import userInfo from '../utils/userInfo'
 import { getUserName } from '../asyncStorage/userStorage'
 import { _getUserOwnIcon } from './UserFireStore'
@@ -7,7 +7,7 @@ export const toggleNice = async (contentId: string) => {
   if (!contentId) return
 
   try {
-    const ref = collection.doc(contentId)
+    const ref = postCollection.doc(contentId)
 
     const nicedUserRef = ref.collection(SUBCOLLECTION_NICED_USER)
 

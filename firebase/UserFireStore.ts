@@ -1,4 +1,4 @@
-import { collection,  userCollection, STORAGE_PATH_USER_ICON, now } from './Fire'
+import { postCollection,  userCollection, STORAGE_PATH_USER_ICON, now } from './Fire'
 import userInfo from '../utils/userInfo'
 import Constants from 'expo-constants'
 import { uploadImage } from './Storage'
@@ -62,7 +62,7 @@ export const uploadUserInfosAsync = async (iconUri: string, userName: string) =>
 }
 
 export const getUserPosts = async () => {
-  const postRef = collection
+  const postRef = postCollection
   // .orderBy('timestamp', 'desc')
   // .limit(size)
   try {

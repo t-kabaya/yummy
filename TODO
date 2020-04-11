@@ -1,18 +1,10 @@
-・シェアした際に、ホーム画面へと遷移する。
+・シェアした際にホーム画面で自動的にリロードを行う。
 ・postの中で、userInfoだけがネストしているのが気になる。
 ・userの代わりに、userNameを下手書きしても良いかもしれない。
 ・やはり、一度投稿したpostのユーザーネームを変える必要がある。
 ・説明文が長かった場合、正常に表示されない。
-・myPageを充実させる。
-・myPageから、postdeteilへと遷移可能にする。
+・myPageにpostの数を表示させる。
+・myPageから、postDetailScreenへと遷移可能にする。
 ・listItemのリファクタリング
-ユーザー画面からプロフィールを編集しようとすると、Network request failedと表示される
-
-
-ライブラリ位を追加する時は、npm install
-node_modulesを復元する場合は、yarn install
-を行わないといけない。
 
 firestoreのテストは諦める。
-
-userPageで、ユーザーの名前を変更した時、それを即座に取得する。
