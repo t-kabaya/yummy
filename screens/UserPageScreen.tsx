@@ -9,7 +9,7 @@ import {
   StatusBar
 } from 'react-native'
 import Text from '../components/Text.tsx'
-import { getUserName } from '../asyncStorage/userStorage'
+import { getUserName } from '../firebase/UserFireStore.ts'
 import {
   getUserPosts,
   getUserOwnIcon
@@ -30,20 +30,20 @@ export default props => {
     showUserPosts()
   }, [])
 
-  const setInitialState = async () => {
-    const userName = await getUserName()
+  const setInitialState = async (): Promise<void> => {
+    const userName = await getUserName(setName)
     setName(userName)
     const icon = await getUserOwnIcon(setUserIcon)
     setUserIcon(icon)
     setIsLoading(false)
   }
 
-  const showUserPosts = async () => {
+  const showUserPosts = async (): Promise<void> => {
     const userPosts = await getUserPosts()
     setUserPosts(userPosts)
   }
 
-  const onPressEditProfileButton = () => {
+  const onPressEditProfileButton = (): void => {
     store.userName = _name
     store.userIconUri = _userIcon
     props.navigation.navigate('EditUserProfileScreen')

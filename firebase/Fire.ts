@@ -25,7 +25,7 @@ firebase.initializeApp(
 firebase.firestore().settings({ timestampsInSnapshots: true })
 
 const collection = firebase.firestore().collection(collectionName)
-const userCollection = firebase.firestore().collection(COLLECTION_USER)
+export const userCollection = firebase.firestore().collection(COLLECTION_USER)
 
 export const getPaged = async ({ size, start }) => {
   let feedRef = collection.orderBy('timestamp', 'desc').limit(size)
