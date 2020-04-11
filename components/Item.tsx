@@ -9,7 +9,6 @@ import {
   View,
   TouchableWithoutFeedback,
   Alert,
-  Dimensions,
   Animated
 } from 'react-native'
 import Text from '../components/Text.tsx'
@@ -28,7 +27,6 @@ export default props => {
     name,
     imageWidth,
     imageHeight,
-    uid,
     image,
     isINiced,
     nicedUsers,
@@ -47,7 +45,7 @@ export default props => {
 
     if (props.imageWidth) {
       // Get the size of the web image
-      Image.getSize(props.image, (width, height) => {
+      Image.getSize(props.image, (width: number, height: number) => {
         setWidth(width)
         setHeight(height)
       })

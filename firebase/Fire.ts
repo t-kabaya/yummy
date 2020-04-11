@@ -86,7 +86,7 @@ export const getPaged = async ({ size, start }) => {
     }
 
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1]
-    return { data: itemsWithNicedUserAndUserIcon, cursor: lastVisible }
+    return { posts: itemsWithNicedUserAndUserIcon, cursor: lastVisible }
   } catch ({ message }) {
     console.error(message)
   }
