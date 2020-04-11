@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Dimensions,
   Platform,
   StatusBar
 } from 'react-native'
@@ -19,14 +18,6 @@ import color from '../assets/color'
 import { editUserProfileText } from '../assets/constant/text.ts'
 import store from '../store/store'
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen'
-
-const { width } = Dimensions.get('window')
-
-const ListItem = ({ item }) => (
-  <View style={S.listItemContainer}>
-    <Image source={{ uri: item.image }} style={S.listItemImage} />
-  </View>
-)
 
 export default props => {
   const [_name, setName] = useState('')
@@ -78,11 +69,10 @@ export default props => {
         style={S.listContainer}
         data={_userPosts}
         renderItem={({ item }) => 
-        <View style={S.listItemContainer}>
-        <Image source={{ uri: item.image }} style={S.listItemImage} />
-        </View>}
-        // <ListItem item={item} />
-      // }
+          <View style={S.listItemContainer}>
+            <Image source={{ uri: item.image }} style={S.listItemImage} />
+          </View>
+        }
         numColumns={3}
       />
     </View>
