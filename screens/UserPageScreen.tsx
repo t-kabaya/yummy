@@ -9,11 +9,7 @@ import {
   StatusBar
 } from 'react-native'
 import Text from '../components/Text.tsx'
-import { getUserName } from '../firebase/UserFireStore.ts'
-import {
-  getUserPosts,
-  getUserOwnIcon
-} from '../firebase/Fire'
+import { getUserName, getUserOwnIcon, getUserPosts } from '../firebase/UserFireStore.ts'
 import color from '../assets/color'
 import { editUserProfileText } from '../assets/constant/text.ts'
 import store from '../store/store'

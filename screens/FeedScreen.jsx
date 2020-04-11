@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { LayoutAnimation, RefreshControl } from 'react-native'
 
 import List from '../components/List'
-import { getPaged } from '../firebase/Fire'
+import { getPaged } from '../firebase/PostFireStore'
 
 const PAGE_SIZE = 5
 

@@ -17,7 +17,7 @@ import * as Permissions from 'expo-permissions'
 import { headerTextOfEditProfileScreen, changeProfileImageText, textInputNameLabelText} from '../assets/constant/text.ts'
 import getPermission from '../utils/getPermission'
 import store from '../store/store.ts'
-import { uploadUserInfosAsync } from '../firebase/Fire.ts'
+import { uploadUserInfosAsync } from '../firebase/UserFireStore.ts'
 
 const { width } = Dimensions.get('window')
 const options = { allowsEditing: true }

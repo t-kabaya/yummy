@@ -15,7 +15,9 @@ import {
   saveUserName,
   clearAsyncStorage
 } from '../asyncStorage/userStorage'
-import { getComment, postComment, _getUserOwnIcon } from '../firebase/Fire'
+import { getComment } from '../firebase/CommentFireStore'
+import { postComment } from '../firebase/CommentFireStore.ts'
+import { _getUserOwnIcon } from '../firebase/UserFireStore'
 import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
