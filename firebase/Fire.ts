@@ -229,7 +229,7 @@ export const postComment = async (contentId, comment) => {
 
 /*---------- userSettings ----------*/
 
-export const uploadUserInfosAsync = async (iconUri, userName) => {
+export const uploadUserInfosAsync = async (iconUri: string, userName: string) => {
   const path = `${STORAGE_PATH_USER_ICON}/${userInfo.userId}.jpg`
   const iconRemoteUri = await uploadImage(iconUri, path)
 
