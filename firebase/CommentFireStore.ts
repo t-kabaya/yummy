@@ -1,18 +1,22 @@
-import { collection, SUBCOLLECTION_COMMENT, now } from './Fire'
+import { postCollection, SUBCOLLECTION_COMMENT, now } from './Fire'
 import userInfo from '../utils/userInfo'
 import { getUserName } from '../asyncStorage/userStorage'
 import { _getUserOwnIcon } from './UserFireStore'
 
 export const getComment = async (contentId: string, cb: (comments: any[]) => void): Promise<any[] | undefined> => {
   try {
-    const commentRef = collection
+    const commentRef = postCollection
       .doc(contentId)
       .collection(SUBCOLLECTION_COMMENT)
       .orderBy('createdAt', 'desc')
 
     commentRef.onSnapshot((querySnapshot: any) => {
       const comments: any[] = []
-      querySnapshot.forEach((doc: any) => comments.push(doc.data()))
+      querySnapshot.forEach((doc: any) => {
+        if (doc.exists && doc.data()) {
+          comments.push(doc.data())
+        }
+      })
       cb(comments)
     })
   } catch ({ message }) {
@@ -25,7 +29,7 @@ export const postComment = async (contentId: string, comment: string) => {
   if (!contentId || comment === '') return
 
   try {
-    const feedItemRef = collection.doc(contentId)
+    const feedItemRef = postCollection.doc(contentId)
     const commentSubcollection = feedItemRef.collection(SUBCOLLECTION_COMMENT)
 
     const userName = await getUserName()

@@ -7,7 +7,7 @@ import { saveUserName } from '../asyncStorage/userStorage'
 export const getUserName = async (cb: (userName: string) => void): Promise<string | null> => {
   try {
     userCollection.doc(userInfo.userId).onSnapshot((doc: any) => {
-      const { userName } = doc && doc.data() && doc.data()
+      const { userName } = doc && doc.exists && doc.data()
       cb(userName)
       return userName
     })
@@ -22,10 +22,13 @@ export const getUserName = async (cb: (userName: string) => void): Promise<strin
 export const getUserOwnIcon = async (cb: (icon: string) => void) => {
   try {
     userCollection.doc(userInfo.userId).onSnapshot((doc: any) => {
-      const icon = doc && doc.data() && doc.data().icon
-      cb(icon)
-      return icon
+      if (doc.exists && doc.data()) {
+        const icon = doc.data().icon
+        cb(icon)
+        return icon
+      }
     })
+    return null
   } catch ({ message }) {
     return null
   }
