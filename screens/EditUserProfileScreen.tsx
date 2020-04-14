@@ -8,6 +8,7 @@ import {
   Dimensions,
   Platform,
   StatusBar,
+  ToastAndroid
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import Text from '../components/Text.tsx'
@@ -40,6 +41,7 @@ export default (props: any) => {
   const onPressCheck = () => {
     uploadUserInfosAsync(_userIcon, _name)
     props.navigation.goBack()
+    ToastAndroid.show('保存しました', ToastAndroid.SHORT);
   }
 
   const onPressChangeProfileImageText = async() => {

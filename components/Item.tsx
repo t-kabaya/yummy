@@ -9,7 +9,8 @@ import {
   View,
   TouchableWithoutFeedback,
   Alert,
-  Animated
+  Animated,
+  ToastAndroid
 } from 'react-native'
 import Text from '../components/Text.tsx'
 import { toggleNice } from '../firebase/NiceFireStore'
@@ -72,7 +73,10 @@ export default props => {
     Alert.alert(
       '不適切な投稿ですか？',
       '',
-      [{ text: 'はい' }, { text: 'いいえ' }],
+      [
+        { text: 'はい', onPress: () => ToastAndroid.show('通報しました。', ToastAndroid.SHORT)},
+        { text: 'いいえ' }
+      ],
       { cancelable: false }
     )
   }
