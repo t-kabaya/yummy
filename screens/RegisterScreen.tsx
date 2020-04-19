@@ -9,9 +9,7 @@ import {
 } from 'react-native'
 import Text from '../components/Text.tsx'
 import {
-  getUserName,
-  saveUserName,
-  clearAsyncStorage
+  saveUserName
 } from '../asyncStorage/userStorage'
 
 const { height, width } = Dimensions.get('window')

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   Image,
   View,
@@ -9,17 +9,20 @@ import {
   StatusBar
 } from 'react-native'
 import Text from '../components/Text.tsx'
-import { getUserName, getUserOwnIcon, getUserPosts } from '../firebase/UserFireStore.ts'
+import { getUserName, getUserOwnIcon, getUserPosts, getUserData } from '../firebase/UserFireStore.ts'
 import color from '../assets/color'
 import { editUserProfileText } from '../assets/constant/text.ts'
 import store from '../store/store'
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen'
+import { UserContext } from '../state/Store'
+import { SET_USER_ICON, SET_USER_NAME } from '../state/UserReducer.ts'
 
-export default props => {
-  const [_name, setName] = useState('')
+
+export default (props: any) => {
   const [_isLoading, setIsLoading] = useState(true)
   const [_userPosts, setUserPosts] = useState([])
-  const [_userIcon, setUserIcon] = useState('')
+
+  const {state, dispatch} = useContext(UserContext)
 
   useEffect(() => {
     setInitialState()
@@ -27,10 +30,10 @@ export default props => {
   }, [])
 
   const setInitialState = async (): Promise<void> => {
-    const userName = await getUserName(setName)
-    setName(userName)
-    const icon = await getUserOwnIcon(setUserIcon)
-    setUserIcon(icon)
+    const userName = await getUserName()
+    const icon = await getUserOwnIcon()
+    dispatch({type: 'SET_USER_ICON', payload: icon})
+    dispatch({type: 'SET_USER_NAME', payload: userName})
     setIsLoading(false)
   }
 
@@ -40,21 +43,22 @@ export default props => {
   }
 
   const onPressEditProfileButton = (): void => {
-    store.userName = _name
-    store.userIconUri = _userIcon
+    store.userName = state.userName
+    store.userIconUri = state.userIcon
     props.navigation.navigate('EditUserProfileScreen')
   }
 
   if (_isLoading) return null
+  console.log({state})
   return (
     <View style={S.container}>
       <View>
-        {_userIcon ? (
-          <Image source={{ uri: _userIcon }} style={S.userIcon} />
+        {state.userIcon ? (
+          <Image source={{ uri: state.userIcon }} style={S.userIcon} />
         ) : (
           <Image source={require('../assets/human.png')} style={S.humanIcon} />
         )}
-        <Text style={S.userNameText}>{_name}</Text>
+        <Text style={S.userNameText}>{state.userName}</Text>
       </View>
       <TouchableOpacity onPress={onPressEditProfileButton}>
         <View style={S.editProfileButtonContainer}>

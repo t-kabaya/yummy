@@ -4,13 +4,14 @@ import Constants from 'expo-constants'
 import { uploadImage } from './Storage'
 import { saveUserName } from '../asyncStorage/userStorage'
 
-export const getUserName = async (cb: (userName: string) => void): Promise<string | null> => {
+export const getUserData = async (): Promise<string | null> => {
   try {
-    userCollection.doc(userInfo.userId).onSnapshot((doc: any) => {
-      const { userName } = doc && doc.exists && doc.data()
-      cb(userName)
-      return userName
-    })
+    const doc = await userCollection.doc(userInfo.userId).get()
+    if (doc.exists) {
+      const userData = doc.data()
+      console.log({userData})
+      return doc.data()
+    }
 
     return null
   } catch ({ message }) {
@@ -19,15 +20,29 @@ export const getUserName = async (cb: (userName: string) => void): Promise<strin
   }
 }
 
-export const getUserOwnIcon = async (cb: (icon: string) => void) => {
+export const getUserName = async (): Promise<string | null> => {
   try {
-    userCollection.doc(userInfo.userId).onSnapshot((doc: any) => {
-      if (doc.exists && doc.data()) {
-        const icon = doc.data().icon
-        cb(icon)
-        return icon
-      }
-    })
+    const doc = await userCollection.doc(userInfo.userId).get()
+    if (doc.exists) {
+      const { userName } = doc.data()
+      return userName
+    }
+
+    return null
+  } catch ({ message }) {
+    console.error(message)
+    return null
+  }
+}
+
+export const getUserOwnIcon = async () => {
+  try {
+    const doc = await userCollection.doc(userInfo.userId).get()
+    if (doc.exists) {
+      const { icon } = doc.data()
+      return icon
+    }
+
     return null
   } catch ({ message }) {
     return null

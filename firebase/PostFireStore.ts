@@ -40,7 +40,7 @@ export const getPaged = async ({ size, start }: {size: number, start: number}) =
 
       // nicedUserRef size always 1.
       nicedUserRef.forEach((doc: any) => {
-        nicedUsers.push(doc.data())
+        if (doc.exists && doc.data()) nicedUsers.push(doc.data())
       })
 
       const isINiced = nicedUsers.some(user => user.userId === userInfo.userId)

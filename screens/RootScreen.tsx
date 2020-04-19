@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createContext, useReducer } from 'react'
 import { SafeAreaView, StyleSheet} from 'react-native'
 import * as Font from 'expo-font'
 import RootRoute from '../routing/RootRoute'
 import RegisterScreen from './RegisterScreen'
 import { getUserName } from '../asyncStorage/userStorage'
+import Store from '../state/Store'
 console.disableYellowBox = true
 
 export default () => {
@@ -29,7 +30,9 @@ export default () => {
   if (_isLoading) return null
   return (
     <SafeAreaView style={S.container}>
-      {_isFirstLaunch ? <RegisterScreen goToHome={goToHome} /> : <RootRoute />}
+      <Store>
+        {_isFirstLaunch ? <RegisterScreen goToHome={goToHome} /> : <RootRoute />}
+      </Store>
     </SafeAreaView>
   )
 }

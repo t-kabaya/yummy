@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   Image,
   TextInput,
@@ -19,6 +19,8 @@ import { headerTextOfEditProfileScreen, changeProfileImageText, textInputNameLab
 import getPermission from '../utils/getPermission'
 import store from '../store/store.ts'
 import { uploadUserInfosAsync } from '../firebase/UserFireStore.ts'
+import { UserContext } from '../state/Store'
+import {SET_USER_NAME, SET_USER_ICON} from '../state/UserReducer.ts'
 
 const { width } = Dimensions.get('window')
 const options = { allowsEditing: true }
@@ -27,6 +29,8 @@ export default (props: any) => {
   const [_name, setName] = useState('')
   const [_isLoading, setIsLoading] = useState(true)
   const [_userIcon, setUserIcon] = useState(null)
+
+  const {_, dispatch} = useContext(UserContext)
 
   useEffect(() => {
     setInitialState()
@@ -39,7 +43,10 @@ export default (props: any) => {
   }
 
   const onPressCheck = () => {
+    // 本来は、ここに保存の成功の結果をawaitで待たなくてはならない
     uploadUserInfosAsync(_userIcon, _name)
+    dispatch({type: 'SET_USER_NAME', payload: _name})
+    dispatch({type: 'SET_USER_ICON', payload: _userIcon})
     props.navigation.goBack()
     ToastAndroid.show('保存しました', ToastAndroid.SHORT);
   }
@@ -49,7 +56,6 @@ export default (props: any) => {
     if (!status) return
 
     const result = await ImagePicker.launchImageLibraryAsync(options)
-    console.log({ result })
       
     if (result.cancelled) return
 

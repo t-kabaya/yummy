@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import Text from '../components/Text.tsx'
 import {
-  getUserName,
   saveUserName,
   clearAsyncStorage
 } from '../asyncStorage/userStorage'
