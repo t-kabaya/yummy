@@ -5,12 +5,14 @@ import shrinkImageAsync from '../utils/shrinkImageAsync'
 import { getUserName } from '../asyncStorage/userStorage'
 import { _getUserOwnIcon } from './UserFireStore'
 
-export const getPaged = async ({ size, start }: {size: number, start: number}) => {
-  let feedRef = postCollection.orderBy('timestamp', 'desc').limit(size)
+const PAGE_SIZE = 5
+
+export const getPosts = async () => {
+  let feedRef = postCollection.orderBy('timestamp', 'desc').limit(PAGE_SIZE)
   try {
-    if (start) {
-      feedRef = feedRef.startAfter(start)
-    }
+    // if (start) {
+    //   feedRef = feedRef.startAfter(start)
+    // }
 
     const querySnapshot = await feedRef.get()
     const feedData: any[] = []
@@ -22,6 +24,7 @@ export const getPaged = async ({ size, start }: {size: number, start: number}) =
         const name = Constants.deviceName
         const reduced = {
           key: doc.id,
+          contentId: doc.id,
           name: (name || '').trim(),
           ...post
         }
