@@ -1,15 +1,17 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { Component, useState, useEffect, useContext } from 'react'
 import { Text, LayoutAnimation, RefreshControl, FlatList, StyleSheet, TouchableHighlight} from 'react-native'
 import { loadMore } from '../assets/constant/text'
 import { getPosts } from '../firebase/PostFireStore'
 import Footer from '../components/Footer'
 import Item from '../components/Item'
+import { Context } from '../state/Store.tsx'
 
 const PAGE_SIZE = 5
 
 const FeedScreen = (props) => {
+  const {state, dispatch} = useContext(Context)
+
   const [loading, setLoading] = useState(true)
-  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     fetchPosts()
@@ -17,8 +19,8 @@ const FeedScreen = (props) => {
 
   const fetchPosts = async (): Promise<void> => {
     const { posts } = await getPosts()
+    dispatch({type: 'SET_FEEDS', payload: posts})
 
-    setPosts(posts)
     setLoading(false)
   }
 
@@ -37,7 +39,7 @@ const FeedScreen = (props) => {
       renderItem={({ item }) => (
         <Item item={item} navigation={props.navigation} />
       )}
-      data={posts}
+      data={state.feeds}
     />
   )
 }

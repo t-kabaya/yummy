@@ -14,15 +14,13 @@ import color from '../assets/color'
 import { editUserProfileText } from '../assets/constant/text.ts'
 import store from '../store/store'
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen'
-import { UserContext } from '../state/Store'
-import { SET_USER_ICON, SET_USER_NAME } from '../state/UserReducer.ts'
-
+import { Context } from '../state/Store'
 
 export default (props: any) => {
   const [_isLoading, setIsLoading] = useState(true)
   const [_userPosts, setUserPosts] = useState([])
 
-  const {state, dispatch} = useContext(UserContext)
+  const {state, dispatch} = useContext(Context)
 
   useEffect(() => {
     setInitialState()

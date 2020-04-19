@@ -19,8 +19,8 @@ import { headerTextOfEditProfileScreen, changeProfileImageText, textInputNameLab
 import getPermission from '../utils/getPermission'
 import store from '../store/store.ts'
 import { uploadUserInfosAsync } from '../firebase/UserFireStore.ts'
-import { UserContext } from '../state/Store'
-import {SET_USER_NAME, SET_USER_ICON} from '../state/UserReducer.ts'
+import { Context } from '../state/Store'
+import {SET_USER_NAME, SET_USER_ICON} from '../state/Reducer.ts'
 
 const { width } = Dimensions.get('window')
 const options = { allowsEditing: true }
@@ -30,7 +30,7 @@ export default (props: any) => {
   const [_isLoading, setIsLoading] = useState(true)
   const [_userIcon, setUserIcon] = useState(null)
 
-  const {_, dispatch} = useContext(UserContext)
+  const {_, dispatch} = useContext(Context)
 
   useEffect(() => {
     setInitialState()
