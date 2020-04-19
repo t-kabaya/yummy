@@ -22,6 +22,7 @@ AnimatableIonicons = Animatable.createAnimatableComponent(Ionicons)
 const profileImageSize = 36
 
 export default props => {
+  console.log({props})
   const {
     contentId,
     text,
@@ -32,9 +33,10 @@ export default props => {
     isINiced,
     nicedUsers,
     user,
-    navigation,
+    // navigation,
     userIcon
-  } = props
+  } = props.item
+  const { navigation } = props
   
   const [_width, setWidth] = useState(null)
   const [_height, setHeight] = useState(null)

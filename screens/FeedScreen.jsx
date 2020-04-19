@@ -1,9 +1,11 @@
 import firebase from 'firebase'
 import React, { Component } from 'react'
-import { LayoutAnimation, RefreshControl } from 'react-native'
+import { Text, LayoutAnimation, RefreshControl, FlatList, StyleSheet, TouchableHighlight} from 'react-native'
+import { loadMore } from '../assets/constant/text'
 
-import List from '../components/List'
 import { getPaged } from '../firebase/PostFireStore'
+import Footer from '../components/Footer'
+import Item from '../components/Item'
 
 const PAGE_SIZE = 5
 
@@ -33,18 +35,41 @@ export default class FeedScreen extends Component {
   }
 
   render () {
+    const newData = this.state.posts.map(x => ({ ...x, contentId: x.key }))
+
     return (
-      <List
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.loading}
-            onRefresh={this.fetchPosts}
-          />
-        }
-        onPressFooter={() => this.fetchPosts(this.lastKnownKey)}
-        data={this.state.posts}
-        navigation={this.props.navigation}
+      <FlatList
+        keyExtractor={item => item.contentId}
+        ListFooterComponent={item => (
+            <TouchableHighlight
+              underlayColor={'#eeeeee'}
+              onPress={() => this.fetchPosts()}
+              style={S.touchable}
+            >
+              <Text style={S.text}>{loadMore}</Text>
+            </TouchableHighlight>
+        )}
+        renderItem={({ item }) => (
+          <Item item={item} navigation={this.props.navigation} />
+        )}
+        data={newData}
       />
     )
   }
 }
+
+const S = StyleSheet.create({
+  touchable: {
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,0.3)'
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 16
+  }
+})
