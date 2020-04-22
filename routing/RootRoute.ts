@@ -51,42 +51,20 @@ const navigator = createBottomTabNavigator(
   }
 )
 
-const createMainNavigator = async () => {
-  const userName = await getUserName()
-
-  return createStackNavigator(
-    {
-      Main: {
-        // if user name not exists, user hasn't register yet
-        screen: navigator,
-        // Set the title for our app when the tab bar screen is present
-        navigationOptions: { title: 'Yummy', headerShown: false }
-      },
-      // This screen will not have a tab bar
-      NewPost: NewPostScreen
-    },
-    {
-      cardStyle: { backgroundColor: 'white' }
-    }
-  )
-}
-
-// Create the navigator that pushes high-level screens like the `NewPost` screen.
-const stackNavigator = createStackNavigator(
+export default createStackNavigator(
   {
-    Main: {
-      // if user name not exists, user hasn't register yet
-      screen: navigator,
-      // Set the title for our app when the tab bar screen is present
-      navigationOptions: { header: null }
-    },
+    // Main: {
+    //   screen: navigator,
+    //   navigationOptions: { header: null }
+    // },
     // This screen will not have a tab bar
-    NewPost: NewPostScreen
+    NewPost: {
+      screen: NewPostScreen,
+      navigationOptions: { header: null }
+  
+    }
   },
   {
     cardStyle: { backgroundColor: 'white' }
   }
 )
-
-// Export it as the root component
-export default stackNavigator
