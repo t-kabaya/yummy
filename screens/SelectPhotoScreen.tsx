@@ -5,12 +5,13 @@ import Text from '../components/Text.tsx'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import getPermission from '../utils/getPermission'
+import { selectPictureText, takePictureText } from '../assets/constant/text'
 
 const options = {
   allowsEditing: true
 }
 
-export default props => {
+export default (props: any) => {
   const selectPhoto = async () => {
     const status = await getPermission(Permissions.CAMERA_ROLL)
     if (!status) return
@@ -18,7 +19,7 @@ export default props => {
     const result = await ImagePicker.launchImageLibraryAsync(options)
     if (result.cancelled) return
 
-    props.navigation.navigate('NewPost', { image: result.uri })
+    props.navigation.navigate('NewPostScreen', { image: result.uri })
   }
 
   const takePhoto = async () => {
@@ -28,16 +29,16 @@ export default props => {
     const result = await ImagePicker.launchCameraAsync(options)
     if (result.cancelled) return
 
-    props.navigation.navigate('NewPost', { image: result.uri })
+    props.navigation.navigate('NewPostScreen', { image: result.uri })
   }
 
   return (
     <View style={S.container}>
       <TouchableOpacity onPress={selectPhoto}>
-        <Text style={S.text}>写真を選択</Text>
+        <Text style={S.text}>{selectPictureText}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={takePhoto}>
-        <Text style={S.text}>写真を撮る</Text>
+        <Text style={S.text}>{takePictureText}</Text>
       </TouchableOpacity>
     </View>
   )

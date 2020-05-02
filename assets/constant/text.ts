@@ -13,3 +13,8 @@ export const loadMore = 'Load More...'
 export const newPostScreenTitle = '新規投稿'
 export const shareText = 'シェア'
 export const fillCaptionText = 'キャプションを入力'
+export const noCaptionText = 'キャプションがありません'
+
+// selectPictureScreen
+export const selectPictureText = '写真を選択'
+export const takePictureText = '写真を撮る'

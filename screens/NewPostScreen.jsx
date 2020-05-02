@@ -1,28 +1,28 @@
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform } from 'react-native'
+import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform, TouchableOpacity, Alert } from 'react-native'
 import HeaderButtons from 'react-navigation-header-buttons'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { Container, Header, Content, Accordion, Left, Right, Body } from "native-base"
-import { shareText, newPostScreenTitle, fillCaptionText } from '../assets/constant/text.ts'
+import { shareText, newPostScreenTitle, fillCaptionText, noCaptionText } from '../assets/constant/text.ts'
 import Color from '../assets/color'
 
 import { post } from '../firebase/PostFireStore'
 
 export default (props) => {
-  const [ text, setText ] = useState('')
+  const [ caption, setCaption ] = useState('')
   
   const { navigation } = props
-  // const image = navigation.getParam('image's)
-  const image = 'https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F530799%2F45f6a6bd-36d1-55e6-a7e7-ae4332567f31.png?ixlib=rb-1.2.2&auto=format&gif-q=60&q=75&s=c8a112adb08abf3be00e4e90e93cee8e'
+  const image = navigation.getParam('image')
+  // const image = 'https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F530799%2F45f6a6bd-36d1-55e6-a7e7-ae4332567f31.png?ixlib=rb-1.2.2&auto=format&gif-q=60&q=75&s=c8a112adb08abf3be00e4e90e93cee8e'
 
   const onPressShare = () => {
-    if (text && image) {
+    if (caption && image) {
       navigation.goBack()
-      post({ text: text.trim(), image })
+      post({ text: caption.trim(), image })
       navigation.navigate('FeedScreen')
     } else {
-      alert('説明文がありません')
+      Alert.alert(noCaptionText)
     }
   }
   
@@ -30,13 +30,17 @@ export default (props) => {
     <View style={S.container}>
       <Header style={S.header}>
         <Left>
-          <Ionicons name="md-arrow-back" size={32} />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="md-arrow-back" size={32} />
+          </TouchableOpacity>
         </Left>
         <Body>
           <Text style={S.headerTitleText}>{newPostScreenTitle}</Text>
         </Body>
         <Right>
-          <Text style={S.shareText}>{shareText}</Text>
+          <TouchableOpacity onPress={onPressShare}>
+            <Text style={S.shareText}>{shareText}</Text>
+          </TouchableOpacity>
         </Right>
       </Header>
       
@@ -49,7 +53,7 @@ export default (props) => {
           multiline
           style={S.textInput}
           placeholder={fillCaptionText}
-          onChangeText={caption => setText(caption)}
+          onChangeText={caption => setCaption(caption)}
         />
       </View>
     </View>

@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 import Item from '../components/Item'
 import { Context } from '../state/Store.tsx'
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 10
 
-const FeedScreen = (props) => {
+export default (props) => {
   const {state, dispatch} = useContext(Context)
 
   const [loading, setLoading] = useState(true)
@@ -20,7 +20,6 @@ const FeedScreen = (props) => {
   const fetchPosts = async (): Promise<void> => {
     const { posts } = await getPosts()
     dispatch({type: 'SET_FEEDS', payload: posts})
-
     setLoading(false)
   }
 
@@ -30,7 +29,7 @@ const FeedScreen = (props) => {
       ListFooterComponent={item => (
           <TouchableHighlight
             underlayColor={'#eeeeee'}
-            onPress={() => this.fetchPosts()}
+            onPress={fetchPosts}
             style={S.touchable}
           >
             <Text style={S.text}>{loadMore}</Text>
@@ -59,5 +58,3 @@ const S = StyleSheet.create({
     fontSize: 16
   }
 })
-
-export default FeedScreen
