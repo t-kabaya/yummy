@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React from 'react'
-import { Image, TextInput, View, StyleSheet, Text, StatusBar } from 'react-native'
+import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform } from 'react-native'
 import HeaderButtons from 'react-navigation-header-buttons'
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen'
 

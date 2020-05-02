@@ -17,7 +17,7 @@ firebase.initializeApp(
     : require('./firebaseconfig.json')
 )
 
-firebase.firestore().settings({ timestampsInSnapshots: true })
+// firebase.firestore().settings({ timestampsInSnapshots: true })
 
 export const postCollection = firebase.firestore().collection(COLLECTION_POST)
 export const userCollection = firebase.firestore().collection(COLLECTION_USER)
