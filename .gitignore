@@ -63,3 +63,5 @@ typings/
 
 firebase/fiirebaseconfig.json
 firebase/fiirebaseconfigStaging.json
+
+settings.json
