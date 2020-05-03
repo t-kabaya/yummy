@@ -1,6 +1,5 @@
-import { Constants } from 'expo'
-import React, { Component } from 'react'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native'
 import Text from '../components/Text.tsx'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'

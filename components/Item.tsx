@@ -21,8 +21,7 @@ AnimatableIonicons = Animatable.createAnimatableComponent(Ionicons)
 
 const profileImageSize = 36
 
-export default props => {
-  console.log({props})
+export default (props: any) => {
   const {
     contentId,
     text,
@@ -30,10 +29,9 @@ export default props => {
     imageWidth,
     imageHeight,
     image,
-    isINiced,
+    isNiced,
     nicedUsers,
     user,
-    // navigation,
     userIcon
   } = props.item
   const { navigation } = props
@@ -44,7 +42,7 @@ export default props => {
   const animatedValue = useRef(new Animated.Value(0)).current
   
   useEffect(() => {
-    setIsNiced(isINiced)
+    setIsNiced(isNiced)
 
     if (props.imageWidth) {
       // Get the size of the web image

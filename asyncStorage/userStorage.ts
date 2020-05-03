@@ -13,8 +13,8 @@ export const saveUserName = async userName => {
 
 export const getUserName = async () => {
   try {
-    const value = await AsyncStorage.getItem(USER_NAME)
-    return value || ''
+    const userName = await AsyncStorage.getItem(USER_NAME)
+    return userName || ''
   } catch ({ message }) {
     console.errer(message)
   }

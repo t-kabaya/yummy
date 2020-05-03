@@ -46,12 +46,12 @@ export const getPosts = async () => {
         if (doc.exists && doc.data()) nicedUsers.push(doc.data())
       })
 
-      const isINiced = nicedUsers.some(user => user.userId === userInfo.userId)
+      const isNiced = nicedUsers.some(user => user.userId === userInfo.userId)
 
       feedItemsWithNicedUser.push({
         ...item,
         nicedUsers,
-        isINiced
+        isNiced
       })
     }
 
@@ -68,29 +68,37 @@ export const getPosts = async () => {
   }
 }
 
-export const post = async ({ text, image: localUri }: {text: string, image: string}): Promise<void> => {
+export const post = async ({ text, image: localUri }: {text: string, image: string}): Promise<any> => {
   try {
     const { uri: reducedImage, width, height } = await shrinkImageAsync(
       localUri
     )
 
-    const userName = await getUserName()
-    if (userName !== '') {
-      userInfo.userName = userName
+    let userName = await getUserName()
+    if (userName == '') {
+      userName = userInfo.userName
     }
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
-    postCollection.add({
+
+    const timestamp = await now()
+
+    const post = {
       userId: userInfo.userId,
+      userName,
+      user: userInfo,
       text,
-      timestamp: now(),
+      timestamp,
       imageWidth: width,
       imageHeight: height,
       image: remoteUri,
-      user: userInfo,
-      createdAt: now()
-    })
+      createdAt: timestamp
+    }
+
+    await postCollection.add(post)
+
+    return post
   } catch ({ message }) {
-    alert(message)
+    console.error(message)
   }
 }

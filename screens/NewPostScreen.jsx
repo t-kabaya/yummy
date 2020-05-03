@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform, TouchableOpacity, Alert } from 'react-native'
 import HeaderButtons from 'react-navigation-header-buttons'
@@ -6,20 +6,21 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { Container, Header, Content, Accordion, Left, Right, Body } from "native-base"
 import { shareText, newPostScreenTitle, fillCaptionText, noCaptionText } from '../assets/constant/text.ts'
 import Color from '../assets/color'
-
 import { post } from '../firebase/PostFireStore'
+import { Context } from '../state/Store.tsx'
 
 export default (props) => {
+  const {state, dispatch} = useContext(Context)
+
   const [ caption, setCaption ] = useState('')
   
   const { navigation } = props
   const image = navigation.getParam('image')
-  // const image = 'https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F530799%2F45f6a6bd-36d1-55e6-a7e7-ae4332567f31.png?ixlib=rb-1.2.2&auto=format&gif-q=60&q=75&s=c8a112adb08abf3be00e4e90e93cee8e'
 
-  const onPressShare = () => {
+  const onPressShare = async () => {
     if (caption && image) {
-      navigation.goBack()
-      post({ text: caption.trim(), image })
+      const newPost = await post({ text: caption.trim(), image })
+      dispatch({type: 'POST_FEED', payload: newPost})
       navigation.navigate('FeedScreen')
     } else {
       Alert.alert(noCaptionText)

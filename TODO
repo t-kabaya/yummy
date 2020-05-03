@@ -10,8 +10,8 @@
 ・postCommentScreenのデザインが、androidXで崩れている。
 ・react-nativeで、requireがtypescriptによってエラーを吐いている。
 ・コメントした人が表示されなくなっている
-
-・NewPostScreenにヘッダーを作成する。
+・photoと、imageと言う単語が、混在している。imageへと統一する。
+・top画面のヘッダーが、ちょっとおかしい？
 
 qiitaに以下の翻訳記事を投稿する。
 https://codeburst.io/global-state-with-react-hooks-and-context-api-87019cc4f2cf
