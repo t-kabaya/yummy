@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 import Item from '../components/Item'
 import { Context } from '../state/Store.tsx'
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 30
 
 export default (props) => {
   const {state, dispatch} = useContext(Context)
@@ -26,15 +26,6 @@ export default (props) => {
   return (
     <FlatList
       keyExtractor={item => item.contentId}
-      ListFooterComponent={item => (
-          <TouchableHighlight
-            underlayColor={'#eeeeee'}
-            onPress={fetchPosts}
-            style={S.touchable}
-          >
-            <Text style={S.text}>{loadMore}</Text>
-          </TouchableHighlight>
-      )}
       renderItem={({ item }) => (
         <Item item={item} navigation={props.navigation} />
       )}
@@ -46,15 +37,6 @@ export default (props) => {
 }
 
 const S = StyleSheet.create({
-  touchable: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.3)'
-  },
   text: {
     fontWeight: 'bold',
     fontSize: 16
