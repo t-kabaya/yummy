@@ -6,7 +6,7 @@ export default createStackNavigator(
   {
     SelectPhotoScreen: {
       screen: SelectPhotoScreen,
-      navigationOptions: { title: 'マイページ',  headerShown: false }
+      navigationOptions: { title: '新規投稿',  headerShown: false }
     },
     NewPostScreen: {
       screen: NewPostScreen,
