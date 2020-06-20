@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useContext } from 'react'
-import { Text, LayoutAnimation, RefreshControl, FlatList, StyleSheet, TouchableHighlight} from 'react-native'
+import { Text, LayoutAnimation, RefreshControl, FlatList, StyleSheet, TouchableHighlight } from 'react-native'
 import { loadMore } from '../assets/constant/text'
 import { getPosts } from '../firebase/PostFireStore'
 import Footer from '../components/Footer'
@@ -39,6 +39,8 @@ export default (props) => {
         <Item item={item} navigation={props.navigation} />
       )}
       data={state.feeds}
+      onRefresh={fetchPosts}
+      refreshing={loading}
     />
   )
 }
