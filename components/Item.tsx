@@ -203,12 +203,12 @@ export default (props: any) => {
             </View>
           </TouchableWithoutFeedback> */}
         </View>
-
-        {nicedUsers && nicedUsers[0] && (
-          <Text>「いいね！」した人： {nicedUsers[0].userName}　さん他</Text>
-        )}
-
-        <Text style={S.subtitle}>{text}</Text>
+        <View style={S.descriptionContainer}>
+          {nicedUsers && nicedUsers[0] && (
+            <Text>「いいね！」した人： {nicedUsers[0].userName}　さん他</Text>
+          )}
+          <Text style={S.subtitle}>{text}</Text>
+        </View>
       </View>
     </React.Fragment>
   )
@@ -283,5 +283,8 @@ const S = StyleSheet.create({
   },
   overlayHeart: {
     tintColor: 'white'
+  },
+  descriptionContainer: {
+    maxHeight: 300,
   }
 })
