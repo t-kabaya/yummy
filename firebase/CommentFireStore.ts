@@ -1,6 +1,6 @@
 import { postCollection, SUBCOLLECTION_COMMENT, now } from './Fire'
 import userInfo from '../utils/userInfo'
-import { getUserName } from '../asyncStorage/userStorage'
+import { getUserName } from '../asyncStorage/UserStorage'
 import { _getUserOwnIcon } from './UserFireStore'
 
 export const getComment = async (contentId: string, cb: (comments: any[]) => void): Promise<any[] | undefined> => {

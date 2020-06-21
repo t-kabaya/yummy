@@ -2,7 +2,7 @@ import { postCollection, now, SUBCOLLECTION_NICED_USER, uploadPhotoAsync } from 
 import Constants from 'expo-constants'
 import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
-import { getUserName } from '../asyncStorage/userStorage'
+import { getUserName } from '../asyncStorage/UserStorage'
 import { _getUserOwnIcon } from './UserFireStore'
 
 const PAGE_SIZE = 5

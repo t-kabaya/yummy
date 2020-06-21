@@ -10,7 +10,7 @@ import {
 import Text from '../components/Text.tsx'
 import {
   saveUserName
-} from '../asyncStorage/userStorage'
+} from '../asyncStorage/UserStorage'
 
 const { height, width } = Dimensions.get('window')
 

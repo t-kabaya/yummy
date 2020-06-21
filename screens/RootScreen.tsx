@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet} from 'react-native'
 import * as Font from 'expo-font'
 import RootRoute from '../routing/RootRoute'
 import RegisterScreen from './RegisterScreen'
-import { getUserName } from '../asyncStorage/userStorage'
+import { getUserName } from '../asyncStorage/UserStorage'
 import Store from '../state/Store'
 console.disableYellowBox = true
 

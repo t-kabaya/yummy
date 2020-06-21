@@ -2,7 +2,7 @@ import { postCollection,  userCollection, STORAGE_PATH_USER_ICON, now } from './
 import userInfo from '../utils/userInfo'
 import Constants from 'expo-constants'
 import { uploadImage } from './Storage'
-import { saveUserName } from '../asyncStorage/userStorage'
+import { saveUserName } from '../asyncStorage/UserStorage'
 
 export const getUserData = async (): Promise<string | null> => {
   try {

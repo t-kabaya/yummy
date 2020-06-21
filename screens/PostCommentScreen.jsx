@@ -13,7 +13,7 @@ import Text from '../components/Text.tsx'
 import {
   saveUserName,
   clearAsyncStorage
-} from '../asyncStorage/userStorage'
+} from '../asyncStorage/UserStorage'
 import { getComment } from '../firebase/CommentFireStore'
 import { postComment } from '../firebase/CommentFireStore.ts'
 import { _getUserOwnIcon } from '../firebase/UserFireStore'
