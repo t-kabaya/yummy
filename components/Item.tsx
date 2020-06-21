@@ -74,7 +74,7 @@ export default (props: any) => {
       '不適切な投稿ですか？',
       '',
       [
-        { text: 'はい', onPress: () => ToastAndroid.show('通報しました。', ToastAndroid.SHORT)},
+        { text: 'はい', onPress: () => Alert.alert('ご報告ありがとうございます。')},
         { text: 'いいえ' }
       ],
       { cancelable: false }
