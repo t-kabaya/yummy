@@ -9,7 +9,7 @@ import {
   StatusBar
 } from 'react-native'
 import Text from '../components/Text.tsx'
-import { getUserName, getUserOwnIcon, getUserPosts, getUserData } from '../firebase/UserFireStore.ts'
+import { getUserName, getUserOwnIcon, getUserPosts } from '../firebase/UserFireStore.ts'
 import color from '../assets/color'
 import { editUserProfileText } from '../assets/constant/text.ts'
 import store from '../store/store'
@@ -17,10 +17,10 @@ import { widthPercentageToDP as wp} from 'react-native-responsive-screen'
 import { Context } from '../state/Store'
 
 export default (props: any) => {
-  const [_isLoading, setIsLoading] = useState(true)
-  const [_userPosts, setUserPosts] = useState([])
+  const [ _isLoading, setIsLoading ] = useState(true)
+  const [ _userPosts, setUserPosts ] = useState([])
 
-  const {state, dispatch} = useContext(Context)
+  const { state, dispatch } = useContext(Context)
 
   useEffect(() => {
     setInitialState()
@@ -30,8 +30,8 @@ export default (props: any) => {
   const setInitialState = async (): Promise<void> => {
     const userName = await getUserName()
     const icon = await getUserOwnIcon()
-    dispatch({type: 'SET_USER_ICON', payload: icon})
-    dispatch({type: 'SET_USER_NAME', payload: userName})
+    dispatch({ type: 'SET_USER_ICON', payload: icon })
+    dispatch({ type: 'SET_USER_NAME', payload: userName })
     setIsLoading(false)
   }
 
@@ -47,7 +47,6 @@ export default (props: any) => {
   }
 
   if (_isLoading) return null
-  console.log({state})
   return (
     <View style={S.container}>
       <View>

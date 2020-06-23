@@ -10,13 +10,9 @@ import {
   Image
 } from 'react-native'
 import Text from '../components/Text.tsx'
-import {
-  saveUserName,
-  clearAsyncStorage
-} from '../asyncStorage/UserStorage'
 import { getComment } from '../firebase/CommentFireStore'
 import { postComment } from '../firebase/CommentFireStore.ts'
-import { _getUserOwnIcon } from '../firebase/UserFireStore'
+import { getUserOwnIcon } from '../firebase/UserFireStore'
 import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
@@ -42,14 +38,9 @@ const PostCommentScreen = ({ goToHome }) => {
 
   const setInitialState = async () => {
     await getComment(store.currentContentId, comment => setComments(comment))
-    const userIcon = await _getUserOwnIcon()
+    const userIcon = await getUserOwnIcon()
     setUserIcon(userIcon)
     setIsLoading(false)
-  }
-
-  const onPressDicision = () => {
-    saveUserName(_textInputValue)
-    goToHome()
   }
 
   const onPressPost = () => {

@@ -2,8 +2,7 @@ import { postCollection, now, SUBCOLLECTION_NICED_USER, uploadPhotoAsync } from 
 import Constants from 'expo-constants'
 import userInfo from '../utils/userInfo'
 import shrinkImageAsync from '../utils/shrinkImageAsync'
-import { getUserName } from '../asyncStorage/UserStorage'
-import { _getUserOwnIcon } from './UserFireStore'
+import { getUserOwnIcon, getUserName } from './UserFireStore'
 
 const PAGE_SIZE = 5
 
@@ -57,7 +56,7 @@ export const getPosts = async () => {
 
     const itemsWithNicedUserAndUserIcon = []
     for (item of feedItemsWithNicedUser) {
-      const userIcon = await _getUserOwnIcon()
+      const userIcon = await getUserOwnIcon()
       itemsWithNicedUserAndUserIcon.push({ ...item, userIcon })
     }
 
@@ -74,10 +73,7 @@ export const post = async ({ text, image: localUri }: {text: string, image: stri
       localUri
     )
 
-    let userName = await getUserName()
-    if (userName == '') {
-      userName = userInfo.userName
-    }
+    const userName = await getUserName()
 
     const remoteUri = await uploadPhotoAsync(reducedImage)
 
@@ -86,7 +82,6 @@ export const post = async ({ text, image: localUri }: {text: string, image: stri
     const post = {
       userId: userInfo.userId,
       userName,
-      user: userInfo,
       text,
       timestamp,
       imageWidth: width,

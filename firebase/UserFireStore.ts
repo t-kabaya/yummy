@@ -2,9 +2,18 @@ import { postCollection,  userCollection, STORAGE_PATH_USER_ICON, now } from './
 import userInfo from '../utils/userInfo'
 import Constants from 'expo-constants'
 import { uploadImage } from './Storage'
-import { saveUserName } from '../asyncStorage/UserStorage'
 
-export const getUserData = async (): Promise<string | null> => {
+type userData = {
+  name: string,
+  icon: string
+}
+
+const INITIAL_USER_DATA = {
+  name: "名無しさん",
+  icon: "https://firebasestorage.googleapis.com/v0/b/yummy-7f43f.appspot.com/o/commonAssets%2Fhuman.png?alt=media&token=2e477f9d-3157-496e-a505-992eeeecdee3"
+}
+
+export const getUserData = async (): Promise<userData | null> => {
   try {
     const doc = await userCollection.doc(userInfo.userId).get()
     if (doc.exists) {
@@ -13,62 +22,29 @@ export const getUserData = async (): Promise<string | null> => {
       return doc.data()
     }
 
-    return null
+    // yet registered.
+    return INITIAL_USER_DATA
   } catch ({ message }) {
     console.error(message)
     return null
   }
 }
 
-export const getUserName = async (): Promise<string | null> => {
-  try {
-    const doc = await userCollection.doc(userInfo.userId).get()
-    if (doc.exists) {
-      const { userName } = doc.data()
-      return userName
-    }
-
-    return null
-  } catch ({ message }) {
-    console.error(message)
-    return null
-  }
+export const getUserName = async (): Promise<string> => {
+  const userData: userData | null = await getUserData()
+  return userData?.name ? userData.name : INITIAL_USER_DATA.name
 }
 
-export const getUserOwnIcon = async () => {
-  try {
-    const doc = await userCollection.doc(userInfo.userId).get()
-    if (doc.exists) {
-      const { icon } = doc.data()
-      return icon
-    }
-
-    return null
-  } catch ({ message }) {
-    return null
-  }
-}
-
-export const _getUserOwnIcon = async (): Promise<String | null> => {
-  try {
-    const userData = await userCollection.doc(userInfo.userId).get()
-    const userIcon = userData && userData.data() && userData.data().icon
-
-    return userIcon
-  } catch ({ message }) {
-    console.error(message)
-    // firestore hate undefined
-    return null
-  }
+export const getUserOwnIcon = async (): Promise<string> => {
+  const userData: userData | null = await getUserData()
+  return userData?.icon ? userData.icon : INITIAL_USER_DATA.icon
 }
 
 export const uploadUserInfosAsync = async (iconUri: string, userName: string) => {
-  const path = `${STORAGE_PATH_USER_ICON}/${userInfo.userId}.jpg`
-  const iconRemoteUri = await uploadImage(iconUri, path)
-
-  saveUserName(userName)
-
   try {
+    const path = `${STORAGE_PATH_USER_ICON}/${userInfo.userId}.jpg`
+    const iconRemoteUri = await uploadImage(iconUri, path)
+
     userCollection.doc(userInfo.userId).set({
       icon: iconRemoteUri,
       userName,

@@ -1,7 +1,6 @@
 import { postCollection, SUBCOLLECTION_COMMENT, now } from './Fire'
 import userInfo from '../utils/userInfo'
-import { getUserName } from '../asyncStorage/UserStorage'
-import { _getUserOwnIcon } from './UserFireStore'
+import { getUserOwnIcon, getUserName } from './UserFireStore'
 
 export const getComment = async (contentId: string, cb: (comments: any[]) => void): Promise<any[] | undefined> => {
   try {
@@ -33,12 +32,12 @@ export const postComment = async (contentId: string, comment: string) => {
     const commentSubcollection = feedItemRef.collection(SUBCOLLECTION_COMMENT)
 
     const userName = await getUserName()
-    const userIcon = await _getUserOwnIcon()
+    const userIcon = await getUserOwnIcon()
 
     commentSubcollection.add({
       comment,
       userId: userInfo.userId,
-      userName: userName === '' ? userInfo.userName : userName,
+      userName: userName,
       userIcon: userIcon || null,
       createdAt: now()
     })

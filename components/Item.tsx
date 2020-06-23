@@ -9,8 +9,7 @@ import {
   View,
   TouchableWithoutFeedback,
   Alert,
-  Animated,
-  ToastAndroid
+  Animated
 } from 'react-native'
 import Text from '../components/Text.tsx'
 import { toggleNice } from '../firebase/NiceFireStore'
@@ -25,13 +24,12 @@ export default (props: any) => {
   const {
     contentId,
     text,
-    name,
     imageWidth,
     imageHeight,
     image,
     isNiced,
     nicedUsers,
-    user,
+    userName,
     userIcon
   } = props.item
   const { navigation } = props
@@ -134,7 +132,7 @@ export default (props: any) => {
                 userIcon ? { uri: userIcon } : require('../assets/human.png')
               }
               />
-            <Text style={S.text}>{user.userName || name}</Text>
+            <Text style={S.text}>{userName}</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={sendReport}>
@@ -204,7 +202,7 @@ export default (props: any) => {
           </TouchableWithoutFeedback> */}
         </View>
         <View style={S.descriptionContainer}>
-          {nicedUsers && nicedUsers[0] && (
+          {nicedUsers?.[0] && (
             <Text>「いいね！」した人： {nicedUsers[0].userName}　さん他</Text>
           )}
           <Text style={S.subtitle}>{text}</Text>

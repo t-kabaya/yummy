@@ -1,9 +1,8 @@
 import { postCollection, SUBCOLLECTION_NICED_USER } from './Fire'
 import userInfo from '../utils/userInfo'
-import { getUserName } from '../asyncStorage/UserStorage'
-import { _getUserOwnIcon } from './UserFireStore'
+import { getUserName } from './UserFireStore'
 
-export const toggleNice = async (contentId: string) => {
+export const toggleNice = async (contentId: string): Promise<void> => {
   if (!contentId) return
 
   try {
@@ -15,9 +14,9 @@ export const toggleNice = async (contentId: string) => {
       .where('userId', '==', userInfo.userId)
       .get()
 
-    const userName = await getUserName()
+    const userName: string = await getUserName()
 
-    const isNicedAlready = !myNice.empty
+    const isNicedAlready: boolean = !myNice.empty
     if (isNicedAlready) {
       myNice.forEach((x: any) => {
         nicedUserRef.doc(x.id).delete()
@@ -25,7 +24,7 @@ export const toggleNice = async (contentId: string) => {
     } else {
       nicedUserRef.add({
         userId: userInfo.userId,
-        userName: userName === '' ? userInfo.userName : userName
+        userName
       })
     }
   } catch ({ message }) {
