@@ -8,7 +8,8 @@
   "scripts": {
     "start": "expo start --localhost --android",
     "test": "node_modules/.bin/jest",
-    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
+    "build": "expo build:android -t apk"
   },
   "dependencies": {
     "expo": "^35.0.0",
