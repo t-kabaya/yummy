@@ -171,12 +171,7 @@ export default (props: any) => {
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={onPressCommentIcon}>
               <View style={S.iconContainer}>
-                <MaterialCommunityIcons
-                  style={{ backgroundColor: 'transparent' }}
-                  name={'chat-processing'}
-                  color={'black'}
-                  size={30}
-                />
+                <Image source={require('../assets/images/kabaCommentIcon.png')} style={S.commentIcon} fadeDuration={0} />
               </View>
             </TouchableWithoutFeedback>
             {/* <TouchableWithoutFeedback onPress={showInPreparationMessage}>
@@ -284,5 +279,9 @@ const S = StyleSheet.create({
   },
   descriptionContainer: {
     maxHeight: 300,
+  },
+  commentIcon: {
+    height: 24,
+    width: 24
   }
 })
