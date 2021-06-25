@@ -1,13 +1,13 @@
-// Import React Navigation
-import {
-  createBottomTabNavigator,
-  createStackNavigator
-} from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import tabBarIcon from '../components/tabBarIcon'
 import FeedStack from './FeedStack'
 import MyPageStack from './MyPageStack'
 import SelectImageStack from './SelectImageStack'
+
+const Tab = createBottomTabNavigator()
+
 
 const navigator = createBottomTabNavigator(
   {

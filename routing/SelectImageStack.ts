@@ -1,4 +1,5 @@
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+
 import SelectPhotoScreen from '../screens/SelectPhotoScreen'
 import NewPostScreen from '../screens/NewPostScreen'
 

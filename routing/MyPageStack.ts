@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 import UserPageScreen from '../screens/UserPageScreen'
 import EditUserProfileScreen from '../screens/EditUserProfileScreen'
 

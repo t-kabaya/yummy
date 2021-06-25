@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 
 import FeedScreen from '../screens/FeedScreen'
 import PostCommentScreen from '../screens/PostCommentScreen'
