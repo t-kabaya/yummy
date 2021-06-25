@@ -3,36 +3,36 @@ import { Ionicons } from '@expo/vector-icons'
 import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform, TouchableOpacity, Alert } from 'react-native'
 import HeaderButtons from 'react-navigation-header-buttons'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import { Container, Header, Content, Accordion, Left, Right, Body } from "native-base"
+import { Container, Header, Content, Accordion, Left, Right, Body } from 'native-base'
 import { shareText, newPostScreenTitle, fillCaptionText, noCaptionText } from '../assets/constant/text.ts'
 import Color from '../assets/color'
 import { post } from '../firebase/PostFireStore'
 import { Context } from '../state/Store.tsx'
 
 export default (props) => {
-  const {state, dispatch} = useContext(Context)
+  const { state, dispatch } = useContext(Context)
 
-  const [ caption, setCaption ] = useState('')
-  
+  const [caption, setCaption] = useState('')
+
   const { navigation } = props
   const image = navigation.getParam('image')
 
   const onPressShare = async () => {
     if (caption && image) {
       const newPost = await post({ text: caption.trim(), image })
-      dispatch({type: 'POST_FEED', payload: newPost})
+      dispatch({ type: 'POST_FEED', payload: newPost })
       navigation.navigate('FeedScreen')
     } else {
       Alert.alert(noCaptionText)
     }
   }
-  
+
   return (
     <View style={S.container}>
       <Header style={S.header}>
         <Left>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="md-arrow-back" size={32} />
+            <Ionicons name='md-arrow-back' size={32} />
           </TouchableOpacity>
         </Left>
         <Body>
@@ -44,12 +44,12 @@ export default (props) => {
           </TouchableOpacity>
         </Right>
       </Header>
-      
+
       <View style={S.row}>
         <Image
           source={{ uri: image }}
           style={S.image}
-          />
+        />
         <TextInput
           multiline
           style={S.textInput}
@@ -64,7 +64,7 @@ export default (props) => {
 const S = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   header: {
     width: wp('100%'),
@@ -88,7 +88,7 @@ const S = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     aspectRatio: 1,
-    width: wp('30%'),
+    width: wp('30%')
   },
   textInput: {
     paddingHorizontal: 16,
@@ -99,6 +99,6 @@ const S = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop: wp('5%'),
+    paddingTop: wp('5%')
   }
 })
