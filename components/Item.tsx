@@ -16,7 +16,7 @@ import { toggleNice } from '../firebase/NiceFireStore'
 import store from '../store/store'
 import * as Animatable from 'react-native-animatable'
 import DoubleTap from '../components/DoubleTap'
-AnimatableIonicons = Animatable.createAnimatableComponent(Ionicons)
+const AnimatableIonicons = Animatable.createAnimatableComponent(Ionicons)
 
 const profileImageSize = 36
 

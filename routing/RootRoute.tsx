@@ -25,7 +25,7 @@ export default function Navigation() {
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={SettingsScreen} />
+      <Stack.Screen name="Root" component={FeedStack} />
       <Stack.Screen name="NotFound" component={SettingsScreen} />
     </Stack.Navigator>
   );
