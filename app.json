@@ -4,7 +4,6 @@
     "description": "Photo Sharing",
     "slug": "yummy",
     "privacy": "unlisted",
-    "sdkVersion": "41.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",

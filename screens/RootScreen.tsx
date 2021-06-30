@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, StyleSheet} from 'react-native'
+import { SafeAreaView, StyleSheet, View} from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font'
 import RootRoute from '../routing/RootRoute'
 import Store from '../state/Store'
 console.disableYellowBox = true
 
 export default () => {
-  const [_isLoading, setIsLoading] = useState(true)
+  // const [_isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setInitialState()
@@ -16,16 +17,18 @@ export default () => {
     await Font.loadAsync({
       notosans: require('../assets/fonts/NotoSansJP-Regular.ttf')
     })
-    setIsLoading(false)
+    // setIsLoading(false)
   }
 
-  if (_isLoading) return null
+  // if (_isLoading) return null
   return (
-    <SafeAreaView style={S.container}>
-      <Store>
-        <RootRoute />
-      </Store>
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={S.container}>
+        <Store>
+          <RootRoute />
+        </Store>
+      </SafeAreaView>
+    </NavigationContainer>
   )
 }
 
