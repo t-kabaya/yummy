@@ -1,3 +1,6 @@
+タブバーにアイコンを表示する。
+アイコンが正常に表示されない。
+
 ・シェアした際にホーム画面で自動的にリロードを行う。
 ・postの中で、userInfoだけがネストしているのが気になる。
 ・userの代わりに、userNameを下手書きしても良いかもしれない。
@@ -12,9 +15,5 @@
 ・コメントした人が表示されなくなっている
 ・photoと、imageと言う単語が、混在している。imageへと統一する。
 ・top画面のヘッダーが、ちょっとおかしい？
-
-qiitaに以下の翻訳記事を投稿する。
-https://codeburst.io/global-state-with-react-hooks-and-context-api-87019cc4f2cf
-以上の記事を参考に、global stateを作ろうとしている。
 
 firestoreのテストは諦める。
