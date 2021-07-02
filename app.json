@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "jsEngine": "hermes",
       "package": "com.kabainc.yummy",
       "versionCode": 5
     }
