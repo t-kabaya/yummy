@@ -139,7 +139,7 @@ export default (props: any) => {
           <View style={S.iconContainer}>
             <Ionicons
               style={S.icon}
-              name={'ios-more'}
+              name={'ios-ellipsis-vertical-sharp'}
               size={26}
               color='black'
               />
@@ -163,7 +163,7 @@ export default (props: any) => {
               <View style={S.iconContainer}>
                 <AnimatableIonicons animation="rubberBand" easing="ease-out" 
                   style={S.icon}
-                  name={_isNiced ? 'ios-heart' : 'ios-heart-empty'}
+                  name={_isNiced ? 'ios-heart' : 'ios-heart-outline'}
                   size={30}
                   color={_isNiced ? 'red' : 'black'}
                 />
