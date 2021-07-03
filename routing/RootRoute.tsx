@@ -7,7 +7,7 @@ import MyPageStack from './MyPageStack'
 import SelectImageStack from './SelectImageStack'
 import { BottomTabParamList  } from 'type'
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 
 export default () => (
   <BottomTab.Navigator
