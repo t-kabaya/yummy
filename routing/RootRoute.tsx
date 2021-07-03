@@ -25,7 +25,7 @@ export default () => (
       component={SelectImageStack}
       options={{
         tabBarLabel: "新規",
-        tabBarIcon: ({color, size}) => TabBarIcon('home')
+        tabBarIcon: ({color, size}) => TabBarIcon('control-point')
       }}
     />
     <BottomTab.Screen
@@ -33,7 +33,7 @@ export default () => (
       component={MyPageStack}
       options={{
         tabBarLabel: "マイページ",
-        tabBarIcon: ({color, size}) => TabBarIcon('home')
+        tabBarIcon: ({color, size}) => TabBarIcon('account-circle')
       }}
     />
   </BottomTab.Navigator>
