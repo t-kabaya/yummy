@@ -9,10 +9,6 @@ const PAGE_SIZE = 5
 export const getPosts = async () => {
   let feedRef = postCollection.orderBy('timestamp', 'desc').limit(PAGE_SIZE)
   try {
-    // if (start) {
-    //   feedRef = feedRef.startAfter(start)
-    // }
-
     const querySnapshot = await feedRef.get()
     const feedData: any[] = []
     querySnapshot.forEach((doc: any) => {
