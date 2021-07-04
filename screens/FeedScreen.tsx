@@ -4,11 +4,11 @@ import { loadMore } from '../assets/constant/text'
 import { getPosts } from '../firebase/PostFireStore'
 import Footer from '../components/Footer'
 import Item from '../components/Item'
-import { Context } from '../state/Store.tsx'
+import { Context } from '../state/Store'
 
 const PAGE_SIZE = 30
 
-export default (props) => {
+export default (props: any) => {
   const {state, dispatch} = useContext(Context)
 
   const [loading, setLoading] = useState(true)

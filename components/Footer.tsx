@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, TouchableHighlight } from 'react-native'
-import Text from '../components/Text.tsx'
+import Text from '../components/Text'
 import { loadMore } from '../assets/constant/text'
 
 export default props => (

@@ -4,12 +4,12 @@ import { Image, TextInput, View, StyleSheet, Text, StatusBar, Platform, Touchabl
 import HeaderButtons from 'react-navigation-header-buttons'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { Container, Header, Content, Accordion, Left, Right, Body } from 'native-base'
-import { shareText, newPostScreenTitle, fillCaptionText, noCaptionText } from '../assets/constant/text.ts'
+import { shareText, newPostScreenTitle, fillCaptionText, noCaptionText } from '../assets/constant/text'
 import Color from '../assets/color'
 import { post } from '../firebase/PostFireStore'
-import { Context } from '../state/Store.tsx'
+import { Context } from '../state/Store'
 
-export default (props) => {
+export default (props: any) => {
   const { state, dispatch } = useContext(Context)
 
   const [caption, setCaption] = useState('')

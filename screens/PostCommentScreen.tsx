@@ -9,15 +9,14 @@ import {
   FlatList,
   Image
 } from 'react-native'
-import Text from '../components/Text.tsx'
-import { getComment } from '../firebase/CommentFireStore'
-import { postComment } from '../firebase/CommentFireStore.ts'
+import Text from '../components/Text'
+import { getComment, postComment } from '../firebase/CommentFireStore'
 import { getUserOwnIcon } from '../firebase/UserFireStore'
 import store from '../store/store'
 
 const { height, width } = Dimensions.get('window')
 
-const Item = ({ item }) => (
+const Item = ({ item }: {item: any}) => (
   <View style={S.commentContainer}>
     <Image source={{ uri: item.userIcon }} style={S.userIcon} />
     <Text style={S.commentText}>
@@ -26,7 +25,7 @@ const Item = ({ item }) => (
   </View>
 )
 
-const PostCommentScreen = ({ goToHome }) => {
+const PostCommentScreen = ({ goToHome }: {goToHome: any}) => {
   const [_textInputValue, setTextInputValue] = useState('')
   const [_isLoading, setIsLoading] = useState(true)
   const [_comments, setComments] = useState([])

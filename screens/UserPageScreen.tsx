@@ -8,10 +8,10 @@ import {
   Platform,
   StatusBar
 } from 'react-native'
-import Text from '../components/Text.tsx'
-import { getUserName, getUserOwnIcon, getUserPosts } from '../firebase/UserFireStore.ts'
+import Text from '../components/Text'
+import { getUserName, getUserOwnIcon, getUserPosts } from '../firebase/UserFireStore'
 import color from '../assets/color'
-import { editUserProfileText } from '../assets/constant/text.ts'
+import { editUserProfileText } from '../assets/constant/text'
 import store from '../store/store'
 import { widthPercentageToDP as wp} from 'react-native-responsive-screen'
 import { Context } from '../state/Store'

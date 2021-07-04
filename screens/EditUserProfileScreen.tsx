@@ -11,16 +11,15 @@ import {
   ToastAndroid
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import Text from '../components/Text.tsx'
+import Text from '../components/Text'
 import color from '../assets/color'
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
-import { headerTextOfEditProfileScreen, changeProfileImageText, textInputNameLabelText} from '../assets/constant/text.ts'
+import { headerTextOfEditProfileScreen, changeProfileImageText, textInputNameLabelText} from '../assets/constant/text'
 import getPermission from '../utils/getPermission'
-import store from '../store/store.ts'
-import { uploadUserInfosAsync } from '../firebase/UserFireStore.ts'
+import store from '../store/store'
+import { uploadUserInfosAsync } from '../firebase/UserFireStore'
 import { Context } from '../state/Store'
-import {SET_USER_NAME, SET_USER_ICON} from '../state/Reducer.ts'
 
 const { width } = Dimensions.get('window')
 const options = { allowsEditing: true }

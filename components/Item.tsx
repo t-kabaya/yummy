@@ -11,7 +11,7 @@ import {
   Alert,
   Animated
 } from 'react-native'
-import Text from '../components/Text.tsx'
+import Text from '../components/Text'
 import { toggleNice } from '../firebase/NiceFireStore'
 import store from '../store/store'
 import * as Animatable from 'react-native-animatable'
