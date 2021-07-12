@@ -1,0 +1,85 @@
+CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address Text NOT NULL DEFAULT '',
+    City DATETIME
+);
+
+CREATE TABLE `test_table` (
+`id` int NOT NULL,
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `test_table` (
+`created_at` TIMESTAMP NOT NULL DEFAULT 0,
+`updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = INNODB;
+
+
+## user
+CREATE TABLE user (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    uid Text,
+    userName Text,
+    icon Text,
+    createdAt TIMESTAMP NOT NULL DEFAULT 0,
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY ( id )
+);
+
+CREATE TABLE post(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    createdAt TIMESTAMP NOT NULL DEFAULT 0,
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY ( id ), 
+    FOREIGN KEY ( userId ) REFERENCES user( id )
+);
+
+# postに紐づく画像を正規化した。
+CREATE TABLE postImage(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    postId BIGINT NOT NULL,
+    url Text,
+    height Int,
+    width Int,
+    createdAt TIMESTAMP NOT NULL DEFAULT 0,
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY ( id ), 
+    FOREIGN KEY ( postId ) REFERENCES post( id ) 
+);
+
+CREATE TABLE nice(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    userId BIGINT NOT NULL,
+    postId BIGINT NOT NULL,
+    createdAt TIMESTAMP NOT NULL DEFAULT 0,
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY ( id ), 
+    FOREIGN KEY ( userId ) REFERENCES user( id ),
+    FOREIGN KEY ( postId ) REFERENCES post( id )
+);
+
+CREATE TABLE comment(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    body Text,
+    userId BIGINT NOT NULL,
+    postId BIGINT NOT NULL,
+    createdAt TIMESTAMP NOT NULL DEFAULT 0,
+    updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY ( id ),
+    FOREIGN KEY ( userId ) REFERENCES user( id ), 
+    FOREIGN KEY ( postId ) REFERENCES post( id )
+);
+
+# テストユーザーの作成
+INSERT INTO user (uid, userName, icon, createdAt, updatedAt) VALUES
+    ( 'testUid', 'testName', 'testIcon', null, null);
+# テスト投稿の作成
+INSERT INTO post (userId, createdAt, updatedAt) VALUES
+    ( 'testUid', null, null);
+テストコメントの作成
+INSERT INTO post (id, body, userId, postId, createdAt, updatedAt) VALUES
+    ( 1, 'testComment', 1, 2, null, null);
