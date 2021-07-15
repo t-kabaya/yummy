@@ -17,11 +17,11 @@ posticoに以下のsqlをコピペして実行していく。
 
 CREATE TABLE users (
   id SERIAL NOT NULL PRIMARY KEY,
-  uid TEXT,
+  uid TEXT UNIQUE,
   userName TEXT,
   icon TEXT,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updatedAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TRIGGER set_timestamp
