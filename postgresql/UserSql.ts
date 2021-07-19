@@ -32,9 +32,15 @@ const saveUserWithIcon = async (uid: string, userName: string, icon: string): Pr
 }
 
 const saveUser = async (uid: string='', userName: string='', icon: string='') => {
+       // TODO: トランザクションは難しいので、効率は悪いけど一つのsqlをバラバラに実行した方が良いかもしれない。（Rollback出来ないけど。）
+
 	// テーブルにユーザーが存在していればinsert,存在していなければupdateする。
 	// postgresql9.5から、on conflictを使用して一行で書くことが出来るがわかりやすさのため、２行のSQLで記述する。
 	// https://stackoverflow.com/questions/11135501/postgresql-update-if-row-with-some-unique-value-exists-else-insert
 	const sql = 'INSERT INTO users (uid, userName, icon) VALUES ($1, $2, $3) RETURNING *;'
+	`UPDATE users SET field='C', field2='Z' WHERE id=3;
+	INSERT INTO table (uid, userName, icon)
+	SELECT 3, 'C', 'Z'
+	WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);`
 	return query(sql, [uid, userName, icon])
 }
