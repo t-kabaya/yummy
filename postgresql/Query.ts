@@ -21,6 +21,7 @@ export const query = async (sql: string, data: any[]=[]): Promise<any[] | null> 
 		return response.rows
 	} catch(e) {
 		console.error(e)
+		await client.query('ROLLBACK') // 以上発生時にはロールバックを行う。
 		client.end() // エラーが帰ってきたらclientを終了する。
 		return []
 	}
