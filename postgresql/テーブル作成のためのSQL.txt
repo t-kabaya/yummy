@@ -1,4 +1,4 @@
-mysql同様postgresqlにも、createdAtと、updatedAtを自動生成する機能はない。
+mysql同様postgresqlにも、created_atと、updated_atを自動生成する機能はない。
 そのためトリガーを設定する関数を作り、それを利用してテーブルを作成していく。
 
 
@@ -19,51 +19,51 @@ posticoに以下のsqlをコピペして実行していく。
 CREATE TABLE users (
   id SERIAL NOT NULL PRIMARY KEY,
   uid TEXT UNIQUE,
-  userName TEXT,
+  user_name TEXT,
   icon TEXT,
-  createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updatedAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE post (
     id SERIAL NOT NULL PRIMARY KEY,
-    userId int NOT NULL,
+    user_id int NOT NULL,
     body Text,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY ( userId ) REFERENCES users ( id )
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY ( user_id ) REFERENCES users ( id )
 );
 
-CREATE TABLE postImage (
+CREATE TABLE post_image (
     id SERIAL NOT NULL PRIMARY KEY,
-    postId int NOT NULL,
+    post_id int NOT NULL,
     url Text,
     height Int,
     width Int,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY ( postId ) REFERENCES post ( id ) 
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY ( post_id ) REFERENCES post ( id ) 
 );
 
 CREATE TABLE nice(
     id SERIAL NOT NULL PRIMARY KEY,
-    userId int NOT NULL,
-    postId int NOT NULL,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY ( userId ) REFERENCES users ( id ),
-    FOREIGN KEY ( postId ) REFERENCES post ( id )
+    user_id int NOT NULL,
+    post_id int NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY ( user_id ) REFERENCES users ( id ),
+    FOREIGN KEY ( post_id ) REFERENCES post ( id )
 );
 
 CREATE TABLE comment (
     id SERIAL NOT NULL PRIMARY KEY,
     body Text,
-    userId int NOT NULL,
-    postId int NOT NULL,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    updatedAt TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY ( userId ) REFERENCES users ( id ), 
-    FOREIGN KEY ( postId ) REFERENCES post ( id )
+    user_id int NOT NULL,
+    post_id int NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY ( user_id ) REFERENCES users ( id ), 
+    FOREIGN KEY ( post_id ) REFERENCES post ( id )
 );
 
 CREATE TRIGGER set_timestamp
@@ -77,7 +77,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TRIGGER set_timestamp
-BEFORE UPDATE ON postImage
+BEFORE UPDATE ON post_image
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
