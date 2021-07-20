@@ -3,8 +3,8 @@ import pg from 'pg'
 const { Client } = pg
 pg.defaults.ssl = true // sslで接続
 
-export const query = async (sql: string, data: any[]=[]): Promise<any[] | null>  => {
-	const client = new Client({
+export const query = async (sql: string, data: any[]=[]) => {
+	const client = await new Client({
 		host: 'ec2-35-171-250-21.compute-1.amazonaws.com',
 		user: 'yrukxmdgnsxqlw',
 		database: 'd2uuqa38bme5q9',
@@ -17,12 +17,11 @@ export const query = async (sql: string, data: any[]=[]): Promise<any[] | null> 
 	try {
 		await client.connect()
 		const response = await client.query(sql, data)
-		await client.end()
 		return response.rows
 	} catch(e) {
 		console.error(e)
-		await client.query('ROLLBACK') // 以上発生時にはロールバックを行う。
-		client.end() // エラーが帰ってきたらclientを終了する。
-		return []
+		return null
+	} finally {
+		client.end() // なぜclient.endの代わりにclient.releaseを使用した方が良いかまだ調べていない。
 	}
 }

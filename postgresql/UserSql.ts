@@ -31,16 +31,24 @@ const saveUserWithIcon = async (uid: string, userName: string, icon: string): Pr
 	saveUser(uid, userName, iconRemoteUri)
 }
 
-const saveUser = async (uid: string='', userName: string='', icon: string='') => {
-       // TODO: トランザクションは難しいので、効率は悪いけど一つのsqlをバラバラに実行した方が良いかもしれない。（Rollback出来ないけど。）
+export const saveUser = async (uid: string, userName: string, icon: string) => {
+	// TODO: トランザクションの実装をしていると、いつまでも完成しなさそうなので効率は悪いけど一つのsqlをバラバラに実行している。（Rollback出来ないけど。）
 
 	// テーブルにユーザーが存在していればinsert,存在していなければupdateする。
 	// postgresql9.5から、on conflictを使用して一行で書くことが出来るがわかりやすさのため、２行のSQLで記述する。
 	// https://stackoverflow.com/questions/11135501/postgresql-update-if-row-with-some-unique-value-exists-else-insert
-	const sql = 'INSERT INTO users (uid, userName, icon) VALUES ($1, $2, $3) RETURNING *;'
-	`UPDATE users SET field='C', field2='Z' WHERE id=3;
-	INSERT INTO table (uid, userName, icon)
-	SELECT 3, 'C', 'Z'
-	WHERE NOT EXISTS (SELECT 1 FROM table WHERE id=3);`
-	return query(sql, [uid, userName, icon])
+	const selectSql = 'SELECT * FROM users SET WHERE uid = $1;'
+	const user = await query(selectSql, [uid])
+	console.log(user)
+
+	if (user.length === 0) {
+		const initUserSql = 'INSERT INTO users (uid, user_name, icon) VALUES ($1, $2, $3) RETURNING *;'
+		const response = await query(initUserSql, [uid, userName, icon])
+		console.log(response)
+	} else {
+		const updateUserSql = 'UPDATE users SET uid = $1, user_name = $2, icon = $3 WHERE uid = $1 RETURNING *;'
+		const response = await query(updateUserSql, [uid, userName, icon])
+		console.log(response)
+
+	}
 }
