@@ -5,6 +5,7 @@ import { getPosts } from '../firebase/PostFireStore'
 import Footer from '../components/Footer'
 import Item from '../components/Item'
 import { Context } from '../state/Store'
+import { maybeInitUser } from '../postgresql/UserSql'
 
 const PAGE_SIZE = 30
 
@@ -15,6 +16,7 @@ export default (props: any) => {
 
   useEffect(() => {
     fetchPosts()
+    maybeInitUser()
   },[])
 
   const fetchPosts = async (): Promise<void> => {

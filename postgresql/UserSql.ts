@@ -49,6 +49,20 @@ export const saveUser = async (uid: string, userName: string, icon: string) => {
 		const updateUserSql = 'UPDATE users SET uid = $1, user_name = $2, icon = $3 WHERE uid = $1 RETURNING *;'
 		const response = await query(updateUserSql, [uid, userName, icon])
 		console.log(response)
+	}
+}
 
+export const maybeInitUser = async() => {
+	const uid = userInfo.userId
+	const userName = 'No Name'
+	const icon = ''
+	// 初回起動の際に、""でユーザーネームとユーザーアイコンを初期化する。
+	const selectSql = 'SELECT * FROM users SET WHERE uid = $1;'
+	const user = await query(selectSql, [uid])
+
+	if (user.length === 0) {
+		const initUserSql = 'INSERT INTO users (uid, user_name, icon) VALUES ($1, $2, $3) RETURNING *;'
+		const response = await query(initUserSql, [uid, userName, icon])
+		console.log(response)
 	}
 }
