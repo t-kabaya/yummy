@@ -2,6 +2,14 @@ import { query } from './Query'
 import userInfo from '../utils/userInfo'
 import { uploadImage } from '../firebase/Storage'
 import { STORAGE_PATH_USER_ICON } from '../firebase/Fire'
+import axios from 'axios'
+
+const fetch = async () => {
+	const res = await axios.get('http://localhost:8080/?sql=SELECT%20*%20FROM%20users%20WHERE%20id%20=%20$1&data=[1]')
+	console.log(res.data)
+}
+
+fetch()
 
 let userState = {
 	'id': -1,
@@ -52,17 +60,8 @@ export const saveUser = async (uid: string, userName: string, icon: string) => {
 	}
 }
 
-export const maybeInitUser = async() => {
-	const uid = userInfo.userId
-	const userName = 'No Name'
-	const icon = ''
-	// 初回起動の際に、""でユーザーネームとユーザーアイコンを初期化する。
-	const selectSql = 'SELECT * FROM users SET WHERE uid = $1;'
-	const user = await query(selectSql, [uid])
+export const maybeInitUser = async(uid: string) => {
 
-	if (user.length === 0) {
-		const initUserSql = 'INSERT INTO users (uid, user_name, icon) VALUES ($1, $2, $3) RETURNING *;'
-		const response = await query(initUserSql, [uid, userName, icon])
-		console.log(response)
-	}
+	const user = await axios.get(`http://localhost:8080?uid=${uid}`)
+	return user
 }
